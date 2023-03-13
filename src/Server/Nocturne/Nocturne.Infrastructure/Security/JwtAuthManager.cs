@@ -2,7 +2,6 @@
 using Microsoft.IdentityModel.Tokens;
 using Nocturne.Infrastructure.Caching;
 using Nocturne.Infrastructure.Security.Entities;
-using System.Collections.Concurrent;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -12,16 +11,14 @@ namespace Nocturne.Infrastructure.Security
 {
     public class JwtAuthManager : IJwtAuthManager
     {
-        private readonly ConcurrentDictionary<string, RefreshToken> _usersRefreshTokens;
         private readonly JwtTokenOptions _jwtTokenConfig;
         private readonly byte[] _secret;
         private readonly UserManager<User> _usersStore;
-        private readonly RedisCacheRepository _tokensCache;
+        private readonly RedisCacheRepository<RefreshToken> _tokensCache;
 
-        public JwtAuthManager(JwtTokenOptions jwtTokenConfig, UserManager<User> usersStore, RedisCacheRepository tokensCache)
+        public JwtAuthManager(JwtTokenOptions jwtTokenConfig, UserManager<User> usersStore, RedisCacheRepository<RefreshToken> tokensCache)
         {
             _jwtTokenConfig = jwtTokenConfig;
-            _usersRefreshTokens = new ConcurrentDictionary<string, RefreshToken>();
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret);
             _usersStore = usersStore;
             _tokensCache = tokensCache;
@@ -29,9 +26,9 @@ namespace Nocturne.Infrastructure.Security
 
         public async Task RemoveExpiredRefreshTokens(DateTime now)
         {
-            var expiredTokens = _usersRefreshTokens.Where(x => x.Value.ExpireAt < now).ToList();
+            var expiredTokens = _tokensCache.Cache.Where(x => x.ExpireAt < now).ToList();
 
-            foreach (var expiredToken in _tokensCache.RefreshTokens.Where(t => t.ExpireAt < now))
+            foreach (var expiredToken in _tokensCache.Cache.Where(t => t.ExpireAt < now))
             {
                 await _tokensCache.Delete(expiredToken);
             }
@@ -39,11 +36,11 @@ namespace Nocturne.Infrastructure.Security
 
         public async Task RemoveRefreshTokenByUserName(string userName)
         {
-            var refreshTokens = _usersRefreshTokens.Where(x => x.Value.UserName == userName).ToList();
+            var refreshTokens = _tokensCache.Cache.Where(x => x.UserName == userName).ToList();
 
             foreach (var refreshToken in refreshTokens)
             {
-                _usersRefreshTokens.TryRemove(refreshToken.Key, out _);
+                await _tokensCache.Delete(refreshToken);
             }
         }
 
@@ -65,7 +62,6 @@ namespace Nocturne.Infrastructure.Security
                 TokenString = GenerateRefreshTokenString(),
                 ExpireAt = now.AddMinutes(_jwtTokenConfig.RefreshTokenExpiration)
             };
-            _usersRefreshTokens.AddOrUpdate(refreshToken.TokenString, refreshToken, (_, _) => refreshToken);
 
             try
             {
@@ -99,7 +95,11 @@ namespace Nocturne.Infrastructure.Security
                 UserName = principal.Identity?.Name
             };
 
-            if (!_usersRefreshTokens.TryGetValue(refreshToken, out var existingRefreshToken))
+            var existingRefreshToken = _tokensCache.Cache
+                .Where(t => t.TokenString == refreshToken)
+                .FirstOrDefault();
+
+            if (existingRefreshToken is null)
             {
                 throw new SecurityTokenException("Invalid token");
             }
