@@ -48,8 +48,6 @@ namespace Nocturne.Features.Auth
 
                     await _userManager.CreateAsync(user);
 
-                    _userManager.AddToRoleAsync()
-
                     var claims = new[]
                     {
                         new Claim(ClaimTypes.Email, user.Email),

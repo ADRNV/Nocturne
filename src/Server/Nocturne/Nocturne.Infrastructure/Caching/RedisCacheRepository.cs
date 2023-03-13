@@ -1,50 +1,45 @@
 ﻿using Nocturne.Core.Repositories;
-using Nocturne.Infrastructure.Security;
 using Redis.OM.Contracts;
 using Redis.OM.Searching;
 
 namespace Nocturne.Infrastructure.Caching
 {
-    public class RedisCacheRepository : ICacheRepository<RefreshToken>
+    public class RedisCacheRepository<T> : ICacheRepository<T> where T : notnull
     {
         private readonly IRedisConnectionProvider _redisConnectionProvider;
 
-        private readonly IRedisConnection _redisConnection;
+        private readonly IRedisCollection<T> _cache;
 
-        private readonly IRedisCollection<RefreshToken> _refreshTokens;
-
-        public IRedisCollection<RefreshToken> RefreshTokens
+        public IRedisCollection<T> Cache
         {
-            get => _refreshTokens;
+            get => _cache;
         }
 
         public RedisCacheRepository(IRedisConnectionProvider redisConnectionProvider)
         {
             _redisConnectionProvider = redisConnectionProvider;
 
-            _redisConnection = redisConnectionProvider.Connection;
-
-            _refreshTokens = redisConnectionProvider.RedisCollection<RefreshToken>();
+            _cache = redisConnectionProvider.RedisCollection<T>();
         }
 
-        public async Task<RefreshToken?> Get(string id)
+        public async Task<T?> Get(string id)
         {
-            return await _refreshTokens.FindByIdAsync(id);
+            return await _cache.FindByIdAsync(id);
         }
 
-        public async Task<string> Insert(RefreshToken entity)
+        public async Task<string> Insert(T entity)
         {
-            return await _refreshTokens.InsertAsync(entity);
+            return await _cache.InsertAsync(entity);
         }
 
-        public Task Update(RefreshToken entity)
+        public Task Update(T entity)
         {
-            return _refreshTokens.UpdateAsync(entity);
+            return _cache.UpdateAsync(entity);
         }
 
-        public async Task Delete(RefreshToken refreshToken)
+        public async Task Delete(T refreshToken)
         {
-            await _refreshTokens.DeleteAsync(refreshToken);
+            await _cache.DeleteAsync(refreshToken);
         }
     }
 }

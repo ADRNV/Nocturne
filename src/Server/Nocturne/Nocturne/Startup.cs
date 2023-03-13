@@ -80,7 +80,7 @@ namespace Nocturne
 
             services.AddSingleton<PasswordHasher<User>>();
 
-            services.AddSingleton<RedisCacheRepository>();
+            services.AddSingleton<RedisCacheRepository<RefreshToken>>();
 
             services.AddScoped<IJwtAuthManager, JwtAuthManager>();
 
