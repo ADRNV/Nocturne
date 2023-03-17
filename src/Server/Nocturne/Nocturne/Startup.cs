@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Nocturne.Features.Messaging.Hubs;
 using Nocturne.Infrastructure.Caching;
 using Nocturne.Infrastructure.Securiry;
 using Nocturne.Infrastructure.Security;
@@ -86,6 +87,11 @@ namespace Nocturne
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Startup>());
 
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SupportNonNullableReferenceTypes();
@@ -111,6 +117,8 @@ namespace Nocturne
                 });
 
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Papers API", Version = "v1" });
+                
+                c.AddSignalRSwaggerGen();
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -150,6 +158,7 @@ namespace Nocturne
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("hubs/messages");
             });
         }
     }
