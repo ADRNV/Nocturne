@@ -12,6 +12,7 @@ using Nocturne.Infrastructure.Security.MappersConfiguration;
 using Nocturne.Middlewares;
 using Redis.OM;
 using Redis.OM.Contracts;
+using Serilog;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
@@ -138,6 +139,8 @@ namespace Nocturne
                     builder.RequireClaim(ClaimTypes.Role, "User");
                 });
             });
+
+           services.AddLogging();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -152,6 +155,12 @@ namespace Nocturne
             app.UseSwagger();
 
             app.UseSwaggerUI();
+
+            app.UseSerilogRequestLogging(options =>
+            {
+                options.MessageTemplate = "Handled {RequestPath}";
+                options.GetLevel = (httpContext, elapsed, ex) => Serilog.Events.LogEventLevel.Debug;
+            });
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
 

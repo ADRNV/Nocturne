@@ -1,10 +1,19 @@
 using Nocturne;
+using Serilog;
 
 class Program
 {
     public static void Main(string[] args)
     {
-        CreateHostBuilder(args).Build().Run();
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .CreateLogger();
+
+        CreateHostBuilder(args)
+            .UseSerilog()
+            .Build()
+            .Run();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
