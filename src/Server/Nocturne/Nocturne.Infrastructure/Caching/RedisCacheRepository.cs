@@ -37,9 +37,9 @@ namespace Nocturne.Infrastructure.Caching
             return _cache.UpdateAsync(entity);
         }
 
-        public async Task Delete(T refreshToken)
+        public async Task Delete(T entity)
         {
-            await _cache.DeleteAsync(refreshToken);
+            await _cache.DeleteAsync(entity);
         }
     }
 }
