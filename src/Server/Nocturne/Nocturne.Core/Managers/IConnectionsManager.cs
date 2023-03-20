@@ -6,9 +6,9 @@ namespace Nocturne.Core.Managers
     {
         Task<string> Connect(User user, string connectionId);
 
-        Task<DateTime> Disconect(User user, string connectionId);
+        Task<bool> Disconect(User user, string connectionId);
 
-        Task<DateTime> Disconect(User user);
+        Task<bool> Disconect(User user);
 
         Task<IEnumerable<string>> GetUserConnections(User user);
 
