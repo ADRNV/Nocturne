@@ -2,7 +2,7 @@
 
 namespace Nocturne.Infrastructure.Security.Entities
 {
-    [Document]
+    [Document(Prefixes = new[] { "Connection" })]
     public class Connection
     {
         [RedisIdField]
