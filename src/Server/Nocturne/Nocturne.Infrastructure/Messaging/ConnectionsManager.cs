@@ -52,23 +52,28 @@ namespace Nocturne.Infrastructure.Messaging
         /// <param name="user">User</param>
         /// <param name="connectionId">Id of connection</param>
         /// <returns>Date of disconect</returns>
-        public async Task<DateTime> Disconect(Core.Models.User user, string connectionId)
+        public async Task<bool> Disconect(Core.Models.User user, string connectionId)
         {
             var disconectingUser = await _userManager.FindByNameAsync(user.UserName);
 
-            if (disconectingUser is not null)
+            if (disconectingUser is null)
             {
-                var connection = _cacheRepository.Cache
+                throw new InvalidOperationException($"User with '{user.UserName}' are not exists");
+            }
+
+            var connection = _cacheRepository.Cache
                     .Where(c => c.ConnectionId == connectionId && c.UserId == disconectingUser.Id)
                     .First();
 
+            if (connection is not null)
+            {
                 await _cacheRepository.Delete(connection);
 
-                return DateTime.Now;
+                return true;
             }
             else
             {
-                throw new InvalidOperationException($"User with '{user.UserName}' are not exists");
+                return false;
             }
         }
 
@@ -77,24 +82,29 @@ namespace Nocturne.Infrastructure.Messaging
         /// </summary>
         /// <param name="user">User</param>
         /// <returns>Date of diconect</returns>
-        public async Task<DateTime> Disconect(Core.Models.User user)
+        public async Task<bool> Disconect(Core.Models.User user)
         {
             
             var disconectingUser = await _userManager.FindByNameAsync(user.UserName);
             
-            if (disconectingUser is not null) 
+            if (disconectingUser is null) 
             {
-                var connection = _cacheRepository.Cache
-                    .Where(c => c.UserId == disconectingUser.Id)
-                    .AsEnumerable();
+                throw new InvalidOperationException($"User with '{user.UserName}' are not exists");
+            }
 
-                await _cacheRepository.Cache.DeleteAsync(connection);
+            var connections = _cacheRepository.Cache
+                  .Where(c => c.UserId == disconectingUser.Id)
+                  .AsEnumerable();
 
-                return DateTime.Now;
+            if (connections.Any())
+            {
+                await _cacheRepository.Cache.DeleteAsync(connections);
+
+                return true;
             }
             else
             {
-                throw new InvalidOperationException($"User with '{user.UserName}' are not exists");
+                return false;
             }
         }
 

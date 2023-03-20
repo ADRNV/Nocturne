@@ -5,5 +5,7 @@ namespace Nocturne.Infrastructure.Security.Entities
     public class User : IdentityUser<Guid>
     {
         public string? ImageUrl { get; set; }
+
+        public IEnumerable<UserGroup>? UserGroups { get; set; }
     }
 }
