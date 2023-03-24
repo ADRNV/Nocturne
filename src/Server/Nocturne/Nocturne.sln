@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nocturne", "Nocturne\Nocturne.csproj", "{A5D46DA2-DDF8-4FFE-9545-2F4B20814E8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nocturne.Core", "Nocturne.Core\Nocturne.Core.csproj", "{96A30B13-F6D2-4D80-A66D-8C78B92A865C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nocturne.Core", "Nocturne.Core\Nocturne.Core.csproj", "{96A30B13-F6D2-4D80-A66D-8C78B92A865C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nocturne.Infrastructure", "Nocturne.Infrastructure\Nocturne.Infrastructure.csproj", "{A0462D69-8EC4-477A-A4EB-B314F7AE2444}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nocturne.Infrastructure", "Nocturne.Infrastructure\Nocturne.Infrastructure.csproj", "{A0462D69-8EC4-477A-A4EB-B314F7AE2444}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

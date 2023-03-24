@@ -12,7 +12,7 @@ namespace Nocturne.Infrastructure.Messaging
     /// <typeparam name="TUser"></typeparam>
     public class ConnectionsManager<TUser> : IConnectionsManager where TUser: IdentityUser<Guid>
     {
-        private readonly RedisCacheRepository<Connection> _cacheRepository;
+        private readonly IRedisCacheRepository<Connection> _cacheRepository;
 
         private UserManager<TUser> _userManager;
 
@@ -21,7 +21,7 @@ namespace Nocturne.Infrastructure.Messaging
         /// </summary>
         /// <param name="cacheRepository">Repository to chaching connections</param>
         /// <param name="userManager">Manager for mapping connections and users</param>
-        public ConnectionsManager(RedisCacheRepository<Connection> cacheRepository, UserManager<TUser> userManager)
+        public ConnectionsManager(IRedisCacheRepository<Connection> cacheRepository, UserManager<TUser> userManager)
         {
             _cacheRepository = cacheRepository;
 

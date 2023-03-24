@@ -4,7 +4,7 @@ using Redis.OM.Searching;
 
 namespace Nocturne.Infrastructure.Caching
 {
-    public class RedisCacheRepository<T> : ICacheRepository<T> where T : notnull
+    public class RedisCacheRepository<T> : IRedisCacheRepository<T> where T : notnull
     {
         private readonly IRedisConnectionProvider _redisConnectionProvider;
 

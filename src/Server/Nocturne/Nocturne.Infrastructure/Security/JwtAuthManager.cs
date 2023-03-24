@@ -14,9 +14,9 @@ namespace Nocturne.Infrastructure.Security
         private readonly JwtTokenOptions _jwtTokenConfig;
         private readonly byte[] _secret;
         private readonly UserManager<User> _usersStore;
-        private readonly RedisCacheRepository<RefreshToken> _tokensCache;
+        private readonly IRedisCacheRepository<RefreshToken> _tokensCache;
 
-        public JwtAuthManager(JwtTokenOptions jwtTokenConfig, UserManager<User> usersStore, RedisCacheRepository<RefreshToken> tokensCache)
+        public JwtAuthManager(JwtTokenOptions jwtTokenConfig, UserManager<User> usersStore, IRedisCacheRepository<RefreshToken> tokensCache)
         {
             _jwtTokenConfig = jwtTokenConfig;
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret);
