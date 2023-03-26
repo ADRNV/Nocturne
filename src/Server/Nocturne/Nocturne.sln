@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nocturne.Core", "Nocturne.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nocturne.Infrastructure", "Nocturne.Infrastructure\Nocturne.Infrastructure.csproj", "{A0462D69-8EC4-477A-A4EB-B314F7AE2444}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nocturne.InfrastructureTests", "Nocturne.InfrastructureTests1\Nocturne.InfrastructureTests.csproj", "{CD78C8FD-C611-4C8F-BD61-A43F423CFAC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A0462D69-8EC4-477A-A4EB-B314F7AE2444}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0462D69-8EC4-477A-A4EB-B314F7AE2444}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0462D69-8EC4-477A-A4EB-B314F7AE2444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD78C8FD-C611-4C8F-BD61-A43F423CFAC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD78C8FD-C611-4C8F-BD61-A43F423CFAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD78C8FD-C611-4C8F-BD61-A43F423CFAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD78C8FD-C611-4C8F-BD61-A43F423CFAC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
