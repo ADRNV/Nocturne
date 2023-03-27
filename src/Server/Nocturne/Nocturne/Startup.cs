@@ -118,7 +118,7 @@ namespace Nocturne
                 });
 
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Papers API", Version = "v1" });
-                
+
                 c.AddSignalRSwaggerGen();
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -140,7 +140,7 @@ namespace Nocturne
                 });
             });
 
-           services.AddLogging();
+            services.AddLogging();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

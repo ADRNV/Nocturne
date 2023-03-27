@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoFixture;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Nocturne.Infrastructure.Caching;
 using Nocturne.Infrastructure.Security.Entities;
-using AutoFixture;
-using Nocturne.Infrastructure.Messaging;
-using Nocturne.Core.Managers;
-using System.Reflection;
 using Nocturne.Infrastructure.Security.MappersConfiguration;
-using Redis.OM.Searching;
+using System.Reflection;
 
 namespace Nocturne.InfrastructureTests.Helpers
 {
@@ -41,13 +38,13 @@ namespace Nocturne.InfrastructureTests.Helpers
                 .NewGuid()
                 .ToString());
 
-           _redisCacheRepositoryMock.Setup(r => r.Delete(It.IsAny<Connection>()))
-                .Returns(Task.CompletedTask);
-           // How mock this ?! 
-           // _redisCacheRepositoryMock.Setup(r => r.Cache)
-           //     .Returns(Connections.AsEnumerable());
-            
-            _userManagerMock = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), 
+            _redisCacheRepositoryMock.Setup(r => r.Delete(It.IsAny<Connection>()))
+                 .Returns(Task.CompletedTask);
+            // How mock this ?! 
+            // _redisCacheRepositoryMock.Setup(r => r.Cache)
+            //     .Returns(Connections.AsEnumerable());
+
+            _userManagerMock = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(),
                 null, null, null, null, null, null, null, null);
 
             _userManagerMock.Setup(u => u.FindByNameAsync(It.IsAny<string>()))
@@ -55,9 +52,9 @@ namespace Nocturne.InfrastructureTests.Helpers
                     .Where(u => u.UserName == name)
                     .First()
                 );
-                
+
             Services = new ServiceCollection()
-                .AddAutoMapper(c => 
+                .AddAutoMapper(c =>
                 {
                     c.AddProfile<IdentityUserMappingProfile>();
                 }, Assembly.GetExecutingAssembly())

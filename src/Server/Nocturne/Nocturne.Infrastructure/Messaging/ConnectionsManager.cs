@@ -10,7 +10,7 @@ namespace Nocturne.Infrastructure.Messaging
     /// Containts mapping between connections and users, managing connections.
     /// </summary>
     /// <typeparam name="TUser"></typeparam>
-    public class ConnectionsManager<TUser> : IConnectionsManager where TUser: IdentityUser<Guid>
+    public class ConnectionsManager<TUser> : IConnectionsManager where TUser : IdentityUser<Guid>
     {
         private readonly IRedisCacheRepository<Connection> _cacheRepository;
 
@@ -84,10 +84,10 @@ namespace Nocturne.Infrastructure.Messaging
         /// <returns>Date of diconect</returns>
         public async Task<bool> Disconect(Core.Models.User user)
         {
-            
+
             var disconectingUser = await _userManager.FindByNameAsync(user.UserName);
-            
-            if (disconectingUser is null) 
+
+            if (disconectingUser is null)
             {
                 throw new InvalidOperationException($"User with '{user.UserName}' are not exists");
             }

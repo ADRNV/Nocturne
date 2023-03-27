@@ -1,5 +1,4 @@
-﻿using Nocturne.Core.Repositories;
-using Redis.OM.Contracts;
+﻿using Redis.OM.Contracts;
 using Redis.OM.Searching;
 
 namespace Nocturne.Infrastructure.Caching

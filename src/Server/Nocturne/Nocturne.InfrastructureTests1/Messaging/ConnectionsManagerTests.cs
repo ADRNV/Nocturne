@@ -2,7 +2,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Nocturne.Core.Managers;
 using Nocturne.Infrastructure.Caching;
 using Nocturne.Infrastructure.Security.Entities;
 using Nocturne.InfrastructureTests.Helpers;

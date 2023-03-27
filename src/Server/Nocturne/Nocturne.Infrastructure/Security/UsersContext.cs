@@ -10,7 +10,7 @@ namespace Nocturne.Infrastructure.Securiry
     {
         public UsersContext(DbContextOptions<UsersContext> options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

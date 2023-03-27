@@ -29,7 +29,7 @@ namespace Nocturne.Features.Messaging.Hubs
         {
             var userName = Context.User.Identity.Name;
 
-            var user = _mapper.Map<User,Nocturne.Core.Models.User>(await _userManager.FindByNameAsync(userName));
+            var user = _mapper.Map<User, Nocturne.Core.Models.User>(await _userManager.FindByNameAsync(userName));
 
             await _connectionManager.Connect(user, Context.ConnectionId);
         }
@@ -39,8 +39,8 @@ namespace Nocturne.Features.Messaging.Hubs
             var userName = Context.User.Identity.Name;
 
             var user = _mapper.Map<User, Nocturne.Core.Models.User>(await _userManager.FindByNameAsync(userName));
-            
-            if(!await _connectionManager.Disconect(user, Context.ConnectionId))
+
+            if (!await _connectionManager.Disconect(user, Context.ConnectionId))
             {
                 await base.OnDisconnectedAsync(exception);
             }

@@ -5,6 +5,6 @@ namespace Nocturne.Infrastructure.Caching
 {
     public interface IRedisCacheRepository<T> : ICacheRepository<T, IRedisCollection<T>>
     {
-       
+
     }
 }
