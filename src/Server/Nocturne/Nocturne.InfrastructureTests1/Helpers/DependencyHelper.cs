@@ -8,6 +8,7 @@ using Nocturne.Infrastructure.Messaging;
 using Nocturne.Core.Managers;
 using System.Reflection;
 using Nocturne.Infrastructure.Security.MappersConfiguration;
+using Redis.OM.Searching;
 
 namespace Nocturne.InfrastructureTests.Helpers
 {
@@ -19,12 +20,15 @@ namespace Nocturne.InfrastructureTests.Helpers
 
         private static Mock<UserManager<User>> _userManagerMock { get; }
 
-        private static ConnectionsManager<User> _connectionsManager { get; set; }
-
         public static IEnumerable<User> UsersContextMock { get; set; } = new Fixture()
             .Build<User>()
             .Without(u => u.UserGroups)
             .With(u => u.UserName)
+            .CreateMany();
+
+        public static IEnumerable<Connection> Connections { get; set; } = new Fixture()
+            .Build<Connection>()
+            .With(c => c.ConnectionId, Guid.NewGuid().ToString())
             .CreateMany();
 
         static DependencyHelper()
@@ -39,8 +43,12 @@ namespace Nocturne.InfrastructureTests.Helpers
 
            _redisCacheRepositoryMock.Setup(r => r.Delete(It.IsAny<Connection>()))
                 .Returns(Task.CompletedTask);
-
-            _userManagerMock = new Mock<UserManager<User>>();
+           // How mock this ?! 
+           // _redisCacheRepositoryMock.Setup(r => r.Cache)
+           //     .Returns(Connections.AsEnumerable());
+            
+            _userManagerMock = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), 
+                null, null, null, null, null, null, null, null);
 
             _userManagerMock.Setup(u => u.FindByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync((string name) => UsersContextMock
@@ -55,7 +63,6 @@ namespace Nocturne.InfrastructureTests.Helpers
                 }, Assembly.GetExecutingAssembly())
                 .AddSingleton(_redisCacheRepositoryMock.Object)
                 .AddSingleton(_userManagerMock.Object)
-                .AddSingleton<IConnectionsManager>()
                 .BuildServiceProvider();
         }
     }
