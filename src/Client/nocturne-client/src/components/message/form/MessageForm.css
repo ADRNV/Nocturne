@@ -1,0 +1,21 @@
+.MessageForm{
+    display: flex;
+    
+}
+
+.messageArea {
+    display: flex;
+}
+
+.primaryButton{
+
+    display: flex;
+    position: fixed;
+  margin-left: 4px;
+  align-items: center;
+}
+
+.MessageContainer{
+    display:flex;
+    align-items: center;
+}

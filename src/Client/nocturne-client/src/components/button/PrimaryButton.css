@@ -1,0 +1,7 @@
+.PrimaryButton{
+   margin-left: 5px;
+    background: #273c75;
+    border: solid 2px #273c75;
+    border-radius: 5pt;
+    padding: .375em 1.125em;
+}
