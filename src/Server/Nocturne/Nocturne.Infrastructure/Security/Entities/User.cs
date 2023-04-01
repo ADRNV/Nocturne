@@ -6,6 +6,6 @@ namespace Nocturne.Infrastructure.Security.Entities
     {
         public string? ImageUrl { get; set; }
 
-        public IEnumerable<UserGroup>? UserGroups { get; set; }
+        public List<UserGroup>? UserGroups { get; set; } = default;
     }
 }

@@ -8,6 +8,8 @@ namespace Nocturne.Infrastructure.Securiry
 {
     public class UsersContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
+        public DbSet<UserGroup> UsersGroups { get; set; }
+
         public UsersContext(DbContextOptions<UsersContext> options) : base(options)
         {
 
