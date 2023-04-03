@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nocturne.Features.Messaging.Hubs;
 using Nocturne.Infrastructure.Caching;
-using Nocturne.Infrastructure.Groups;
 using Nocturne.Infrastructure.Securiry;
 using Nocturne.Infrastructure.Security;
 using Nocturne.Infrastructure.Security.Entities;

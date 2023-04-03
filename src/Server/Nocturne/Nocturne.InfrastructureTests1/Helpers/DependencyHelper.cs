@@ -23,43 +23,26 @@ namespace Nocturne.InfrastructureTests.Helpers
             .With(u => u.UserName)
             .CreateMany();
 
-        public static IEnumerable<Connection> Connections { get; set; } = new Fixture()
+        public static IList<Connection> Connections { get; set; } = new Fixture()
             .Build<Connection>()
             .With(c => c.ConnectionId, Guid.NewGuid().ToString())
-            .CreateMany();
+            .CreateMany()
+            .ToList();
 
         static DependencyHelper()
         {
             _redisCacheRepositoryMock = new Mock<IRedisCacheRepository<Connection>>();
 
-            _redisCacheRepositoryMock.Setup(r => r.Insert(It.IsAny<Connection>()))
-                .ReturnsAsync(() =>
-                Guid
-                .NewGuid()
-                .ToString());
-
-            _redisCacheRepositoryMock.Setup(r => r.Delete(It.IsAny<Connection>()))
-                 .Returns(Task.CompletedTask);
-            // How mock this ?! 
-            // _redisCacheRepositoryMock.Setup(r => r.Cache)
-            //     .Returns(Connections.AsEnumerable());
-
             _userManagerMock = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(),
                 null, null, null, null, null, null, null, null);
-
-            _userManagerMock.Setup(u => u.FindByNameAsync(It.IsAny<string>()))
-                .ReturnsAsync((string name) => UsersContextMock
-                    .Where(u => u.UserName == name)
-                    .First()
-                );
 
             Services = new ServiceCollection()
                 .AddAutoMapper(c =>
                 {
                     c.AddProfile<IdentityUserMappingProfile>();
                 }, Assembly.GetExecutingAssembly())
-                .AddSingleton(_redisCacheRepositoryMock.Object)
-                .AddSingleton(_userManagerMock.Object)
+                .AddSingleton(_redisCacheRepositoryMock)
+                .AddSingleton(_userManagerMock)
                 .BuildServiceProvider();
         }
     }
