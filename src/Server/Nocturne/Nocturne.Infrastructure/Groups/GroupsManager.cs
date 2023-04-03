@@ -4,7 +4,7 @@ using Nocturne.Infrastructure.Security.Entities;
 
 namespace Nocturne.Infrastructure.Groups
 {
-    public class GroupsManager : IGroupManager, IDisposable
+    public class GroupsManager : IDisposable
     {
         private readonly UserManager<User> _userManager;
 
