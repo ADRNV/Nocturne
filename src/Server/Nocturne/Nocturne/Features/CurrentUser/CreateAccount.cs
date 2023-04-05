@@ -8,7 +8,7 @@ using System.Security.Claims;
 using User = Nocturne.Core.Models.User;
 using UserInfrastructure = Nocturne.Infrastructure.Security.Entities.User;
 
-namespace Nocturne.Features.Auth
+namespace Nocturne.Features.CurrentUser
 {
     public class CreateAccount
     {

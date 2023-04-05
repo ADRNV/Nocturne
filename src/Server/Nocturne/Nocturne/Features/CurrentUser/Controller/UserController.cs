@@ -1,18 +1,19 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Core.Models;
+using Nocturne.Features.CurrentUser;
 using Nocturne.Infrastructure.Security;
 
 
-namespace Nocturne.Features.Auth.Controllers
+namespace Nocturne.Features.CurrentUser.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public AuthController(IMediator mediator)
+        public UserController(IMediator mediator)
         {
             _mediator = mediator;
         }
