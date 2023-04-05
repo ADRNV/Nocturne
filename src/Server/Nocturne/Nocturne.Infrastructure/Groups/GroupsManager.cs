@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Nocturne.Core.Models;
 using Nocturne.Infrastructure.Securiry;
 using Nocturne.Infrastructure.Security.Entities;
+using User = Nocturne.Infrastructure.Security.Entities.User;
 
 namespace Nocturne.Infrastructure.Groups
 {
@@ -11,16 +14,20 @@ namespace Nocturne.Infrastructure.Groups
         private readonly IUserStore<User> _userStore;
 
         private readonly UsersContext _usersContext;
+
+        private readonly IMapper _mapper;
         
         private bool _disposedValue;
 
-        public GroupsManager(UserManager<User> userManager, IUserStore<User> userStore, UsersContext usersContext)
+        public GroupsManager(UserManager<User> userManager, IUserStore<User> userStore, UsersContext usersContext, IMapper mapper)
         {
             _userManager = userManager;
 
             _userStore = userStore;
 
             _usersContext = usersContext;
+
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -31,13 +38,15 @@ namespace Nocturne.Infrastructure.Groups
         /// <param name="cancellationToken"></param>
         /// <returns>Added user to group or not</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<bool> AddToGroup(string userName, UserGroup userGroup, CancellationToken cancellationToken)
+        public async Task<bool> AddToGroup(string userName, Group group, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
             if(user is not null)
             {
-                user.UserGroups.Add(userGroup);
+                var userGroup = _mapper.Map<Group, UserGroup>(group);
+
+                user.UserGroups!.Add(userGroup);
 
                 return await SetChange(user, cancellationToken);
             }
@@ -56,13 +65,16 @@ namespace Nocturne.Infrastructure.Groups
         /// <param name="cancellationToken"></param>
         /// <returns>Added or not</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<bool> AddToGroup(string userName, IEnumerable<UserGroup> userGroup, CancellationToken cancellationToken)
+        public async Task<bool> AddToGroup(string userName, IEnumerable<Group> groups, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
             if (user is not null)
             {
-                user.UserGroups.AddRange(userGroup);
+                var userGroups = _mapper
+                    .Map<IEnumerable<Group>, IEnumerable<UserGroup>>(groups);
+
+                user.UserGroups!.AddRange(userGroups);
 
                 return await SetChange(user, cancellationToken);
             }
@@ -81,13 +93,15 @@ namespace Nocturne.Infrastructure.Groups
         /// <param name="cancellationToken"></param>
         /// <returns>Removed or not</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<bool> RemoveFromGroup(string userName, UserGroup userGroup, CancellationToken cancellationToken)
+        public async Task<bool> RemoveFromGroup(string userName, Group group, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
             if (user is not null)
             {
-                user.UserGroups.Remove(userGroup);
+                var userGroup = _mapper.Map<Group, UserGroup>(group);
+
+                user.UserGroups!.Remove(userGroup);
 
                 return await SetChange(user, cancellationToken);
             }
@@ -105,13 +119,16 @@ namespace Nocturne.Infrastructure.Groups
         /// <param name="cancellationToken"></param>
         /// <returns>Removed or not</returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<bool> RemoveFromGroups(string userName, IEnumerable<UserGroup> userGroups, CancellationToken cancellationToken)
+        public async Task<bool> RemoveFromGroups(string userName, IEnumerable<Group> groups, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
             if (user is not null)
             {
-                user.UserGroups.AddRange(userGroups);
+                var userGroups = _mapper
+                    .Map<IEnumerable<Group>, IEnumerable<UserGroup>>(groups);
+
+                user.UserGroups!.AddRange(userGroups);
 
                 return await SetChange(user, cancellationToken);
             }
@@ -121,14 +138,16 @@ namespace Nocturne.Infrastructure.Groups
             }
         }
 
-        public async Task<UserGroup?> GetGroupById(Guid id)
+        public async Task<Group?> GetGroupById(Guid id)
         {
-           return await _usersContext.UsersGroups.FindAsync(new []{ id });
+           return _mapper
+                .Map<UserGroup?, Group>(await _usersContext.UsersGroups.FindAsync(new []{ id }));
         }
 
-        public async Task<UserGroup?> GetGroupByName(Guid id)
+        public async Task<Group?> GetGroupByName(Guid id)
         {
-            return await _usersContext.UsersGroups.FindAsync(new[] { id });
+            return _mapper
+                .Map<UserGroup?, Group>(await _usersContext.UsersGroups.FindAsync(new[] { id }));
         }
 
         private async Task<bool> SetChange(User user, CancellationToken cancellationToken)
