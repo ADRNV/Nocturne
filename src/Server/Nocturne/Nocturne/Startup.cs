@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Nocturne.Core.Managers;
 using Nocturne.Features.Messaging.Hubs;
 using Nocturne.Infrastructure.Caching;
+using Nocturne.Infrastructure.Groups;
 using Nocturne.Infrastructure.Securiry;
 using Nocturne.Infrastructure.Security;
 using Nocturne.Infrastructure.Security.Entities;
@@ -83,6 +85,8 @@ namespace Nocturne
             services.AddSingleton<PasswordHasher<User>>();
 
             services.AddSingleton<IRedisCacheRepository<RefreshToken>, RedisCacheRepository<RefreshToken>>();
+
+            services.AddScoped<IGroupManager, GroupsManager>();
 
             services.AddScoped<IJwtAuthManager, JwtAuthManager>();
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Nocturne.Core.Managers;
 using Nocturne.Core.Models;
 using Nocturne.Infrastructure.Securiry;
 using Nocturne.Infrastructure.Security.Entities;
@@ -7,7 +8,7 @@ using User = Nocturne.Infrastructure.Security.Entities.User;
 
 namespace Nocturne.Infrastructure.Groups
 {
-    public class GroupsManager : IDisposable
+    public class GroupsManager : IGroupManager, IDisposable
     {
         private readonly UserManager<User> _userManager;
 
