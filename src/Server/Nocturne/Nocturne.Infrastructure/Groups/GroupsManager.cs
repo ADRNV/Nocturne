@@ -158,6 +158,22 @@ namespace Nocturne.Infrastructure.Groups
             return identityResult.Succeeded;
         }
 
+        public async Task<bool> UserInGroup(Core.Models.User user, Group group)
+        {
+            var userGroup = _mapper.Map<UserGroup>(group);
+
+            var identityUser = _mapper.Map<User>(user);
+
+            if(identityUser is not null)
+            {
+                return await Task.Run(() => identityUser.UserGroups.Contains(userGroup));
+            }
+            else
+            {
+                throw new InvalidOperationException($"User with userName {user.UserName} not found");
+            }
+
+        }
 
         /// <summary>
         /// Releases resources

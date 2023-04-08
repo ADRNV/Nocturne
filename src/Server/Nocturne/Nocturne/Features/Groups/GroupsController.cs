@@ -8,11 +8,11 @@ namespace Nocturne.Features.Groups
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class GrupsController : ControllerBase
+    public class GroupsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public GrupsController(IMediator mediator)
+        public GroupsController(IMediator mediator)
         {
             _mediator = mediator;
         }
