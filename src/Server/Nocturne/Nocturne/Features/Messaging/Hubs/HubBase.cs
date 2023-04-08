@@ -3,10 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Nocturne.Core.Managers;
-using Nocturne.Core.Models;
-using Nocturne.Features.Messaging.Clients;
-using Nocturne.Infrastructure.Security.Entities;
-using SignalRSwaggerGen.Attributes;
 using User = Nocturne.Infrastructure.Security.Entities.User;
 
 namespace Nocturne.Features.Messaging.Hubs

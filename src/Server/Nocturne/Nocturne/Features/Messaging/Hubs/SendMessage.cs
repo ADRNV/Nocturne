@@ -20,7 +20,7 @@ namespace Nocturne.Features.Messaging.Hubs
             private readonly UserManager<User> _userManager;
 
             private readonly IMapper _mapper;
-            
+
             public Handler(IConnectionsManager connectionsManager, UserManager<User> userManager, IMapper mapper)
             {
                 _connectionsManager = connectionsManager;
@@ -42,11 +42,11 @@ namespace Nocturne.Features.Messaging.Hubs
                         .GetUserConnections(_mapper.Map<Core.Models.User>(user));
 
                     request.Message.From = user.UserName;
-                    
+
                     await request.HubContext.Clients.Clients(userConnections)
-                        .SendMessage(request.Message);    
+                        .SendMessage(request.Message);
                 }
-                
+
                 return identityUser is null;
             }
         }

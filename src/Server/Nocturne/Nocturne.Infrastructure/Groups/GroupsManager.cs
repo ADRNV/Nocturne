@@ -17,7 +17,7 @@ namespace Nocturne.Infrastructure.Groups
         private readonly UsersContext _usersContext;
 
         private readonly IMapper _mapper;
-        
+
         private bool _disposedValue;
 
         public GroupsManager(UserManager<User> userManager, IUserStore<User> userStore, UsersContext usersContext, IMapper mapper)
@@ -43,7 +43,7 @@ namespace Nocturne.Infrastructure.Groups
         {
             var user = await _userManager.FindByNameAsync(userName);
 
-            if(user is not null)
+            if (user is not null)
             {
                 var userGroup = _mapper.Map<Group, UserGroup>(group);
 
@@ -55,7 +55,7 @@ namespace Nocturne.Infrastructure.Groups
             {
                 throw new InvalidOperationException($"User with userName {userName} not found");
             }
-           
+
         }
 
         /// <summary>
@@ -141,8 +141,8 @@ namespace Nocturne.Infrastructure.Groups
 
         public async Task<Group?> GetGroupById(Guid id)
         {
-           return _mapper
-                .Map<UserGroup?, Group>(await _usersContext.UsersGroups.FindAsync(new []{ id }));
+            return _mapper
+                 .Map<UserGroup?, Group>(await _usersContext.UsersGroups.FindAsync(new[] { id }));
         }
 
         public async Task<Group?> GetGroupByName(Guid id)
@@ -164,7 +164,7 @@ namespace Nocturne.Infrastructure.Groups
 
             var identityUser = _mapper.Map<User>(user);
 
-            if(identityUser is not null)
+            if (identityUser is not null)
             {
                 return await Task.Run(() => identityUser.UserGroups.Contains(userGroup));
             }

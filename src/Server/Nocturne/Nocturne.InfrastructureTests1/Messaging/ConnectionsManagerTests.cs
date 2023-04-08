@@ -44,13 +44,13 @@ namespace Nocturne.Infrastructure.Messaging.Tests
                      return Task.CompletedTask;
                  });
 
-            
+
             _userManager.Setup(u => u.FindByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync((string name) => DependencyHelper.UsersContextMock
                     .Where(u => u.UserName == name)
                     .First()
                 );
-            
+
             _mapper = DependencyHelper.Services.GetRequiredService<IMapper>();
 
             _connectionsManager = new ConnectionsManager<User>(
