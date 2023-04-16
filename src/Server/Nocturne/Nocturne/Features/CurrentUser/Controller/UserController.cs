@@ -18,13 +18,13 @@ namespace Nocturne.Features.CurrentUser.Controller
         }
 
         [HttpPost("sign-in")]
-        public async Task<JwtAuthResult> SignIn([FromBody] User user)
+        public async Task<JwtAuthResult> SignIn([FromBody] CoreUser user)
         {
             return await _mediator.Send(new SignIn.Command(user));
         }
 
         [HttpPost("create-one")]
-        public async Task<JwtAuthResult> CreateAccount([FromBody] User user)
+        public async Task<JwtAuthResult> CreateAccount([FromBody] CoreUser user)
         {
             return await _mediator.Send(new CreateAccount.Command(user));
         }

@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Nocturne.Core.Managers;
-using Nocturne.Core.Models;
 using Nocturne.Features.Messaging.Clients;
+using Nocturne.Infrastructure.Security.Entities;
 using SignalRSwaggerGen.Attributes;
-using User = Nocturne.Infrastructure.Security.Entities.User;
 
 namespace Nocturne.Features.Messaging.Hubs
 {
@@ -17,10 +16,10 @@ namespace Nocturne.Features.Messaging.Hubs
 
         }
 
-        public async Task<bool> SendToUser(Message message, string userName) =>
+        public async Task<bool> SendToUser(CoreMessage message, string userName) =>
             await _mediator.Send(new SendMessage.Command(this, message, userName));
 
-        public async Task<bool> ReciverFromUser(Message message, string from) =>
+        public async Task<bool> ReciverFromUser(CoreMessage message, string from) =>
             await _mediator.Send(new ReciveMessage.Command(this, message, from));
 
     }

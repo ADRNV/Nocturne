@@ -3,15 +3,14 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Nocturne.Core.Managers;
-using Nocturne.Core.Models;
 using Nocturne.Features.Messaging.Clients;
-using User = Nocturne.Infrastructure.Security.Entities.User;
+using Nocturne.Infrastructure.Security.Entities;
 
 namespace Nocturne.Features.Messaging.Hubs
 {
     public class SendMessage
     {
-        public record Command(HubBase<IChatClient> HubContext, Message Message, string To) : IRequest<bool>;
+        public record Command(HubBase<IChatClient> HubContext, CoreMessage Message, string To) : IRequest<bool>;
 
         public class Handler : IRequestHandler<Command, bool>
         {

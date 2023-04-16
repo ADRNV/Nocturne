@@ -7,6 +7,7 @@ using Nocturne.Core.Managers;
 using Nocturne.Features.Messaging.Hubs;
 using Nocturne.Infrastructure.Caching;
 using Nocturne.Infrastructure.Groups;
+using Nocturne.Infrastructure.Messaging;
 using Nocturne.Infrastructure.Securiry;
 using Nocturne.Infrastructure.Security;
 using Nocturne.Infrastructure.Security.Entities;
@@ -85,6 +86,10 @@ namespace Nocturne
             services.AddSingleton<PasswordHasher<User>>();
 
             services.AddSingleton<IRedisCacheRepository<RefreshToken>, RedisCacheRepository<RefreshToken>>();
+
+            services.AddSingleton<IRedisCacheRepository<Connection>, RedisCacheRepository<Connection>>();
+
+            services.AddScoped<IConnectionsManager, ConnectionsManager<User>>();
 
             services.AddScoped<IGroupManager, GroupsManager>();
 

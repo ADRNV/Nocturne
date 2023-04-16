@@ -2,32 +2,31 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Nocturne.Infrastructure.Security;
+using Nocturne.Infrastructure.Security.Entities;
 using Nocturne.Models;
 using System.Net;
 using System.Security.Claims;
-using User = Nocturne.Core.Models.User;
-using UserInfrastructure = Nocturne.Infrastructure.Security.Entities.User;
 
 namespace Nocturne.Features.CurrentUser
 {
     public class CreateAccount
     {
-        public record Command(User User) : IRequest<JwtAuthResult>;
+        public record Command(CoreUser User) : IRequest<JwtAuthResult>;
 
         public class CommandHendler : IRequestHandler<Command, JwtAuthResult>
         {
-            private readonly SignInManager<UserInfrastructure> _signInManager;
+            private readonly SignInManager<User> _signInManager;
 
-            private readonly UserManager<UserInfrastructure> _userManager;
+            private readonly UserManager<User> _userManager;
 
-            private readonly IPasswordHasher<UserInfrastructure> _passwordHasher;
+            private readonly IPasswordHasher<User> _passwordHasher;
 
             private readonly IJwtAuthManager _jwtAuthManager;
 
             private readonly IMapper _mapper;
 
-            public CommandHendler(SignInManager<UserInfrastructure> signInManager, UserManager<UserInfrastructure> userManager,
-                IPasswordHasher<UserInfrastructure> passwordHasher, IJwtAuthManager jwtAuthManager, IMapper mapper)
+            public CommandHendler(SignInManager<User> signInManager, UserManager<User> userManager,
+                IPasswordHasher<User> passwordHasher, IJwtAuthManager jwtAuthManager, IMapper mapper)
             {
                 _signInManager = signInManager;
                 _userManager = userManager;
@@ -42,7 +41,7 @@ namespace Nocturne.Features.CurrentUser
 
                 if (user is null)
                 {
-                    user = _mapper.Map<User, UserInfrastructure>(request.User);
+                    user = _mapper.Map<CoreUser, User>(request.User);
 
                     user.PasswordHash = _passwordHasher.HashPassword(user, request.User.Pasword);
 
