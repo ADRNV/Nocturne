@@ -15,11 +15,11 @@ namespace Nocturne.Features.CurrentUser
         {
             private readonly SignInManager<User> _signInManager;
 
-            private readonly PasswordHasher<User> _passwordHasher;
+            private readonly IPasswordHasher<User> _passwordHasher;
 
             private readonly IJwtAuthManager _jwtAuthManager;
 
-            public CommandHandler(SignInManager<User> signInManager, PasswordHasher<User> passwordHasher, IJwtAuthManager jwtAuthManager)
+            public CommandHandler(SignInManager<User> signInManager, IPasswordHasher<User> passwordHasher, IJwtAuthManager jwtAuthManager)
             {
                 _signInManager = signInManager;
                 _passwordHasher = passwordHasher;
@@ -30,7 +30,7 @@ namespace Nocturne.Features.CurrentUser
             {
                 var user = await _signInManager.UserManager.FindByEmailAsync(request.User.Login);
 
-                var signIn = await _signInManager.PasswordSignInAsync(user, _passwordHasher.HashPassword(user, request.User.Pasword), true, false);
+                var signIn = await _signInManager.PasswordSignInAsync(user, request.User.Pasword, true, false);
 
                 var claims = new[]
                 {
