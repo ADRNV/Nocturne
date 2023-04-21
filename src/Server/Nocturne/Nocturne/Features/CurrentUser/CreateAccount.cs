@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Nocturne.Features.CurrentUser.Validation;
 using Nocturne.Infrastructure.Security;
 using Nocturne.Infrastructure.Security.Entities;
 using Nocturne.Models;

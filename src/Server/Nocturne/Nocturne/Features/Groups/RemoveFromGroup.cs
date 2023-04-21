@@ -7,8 +7,6 @@ namespace Nocturne.Features.Groups
 {
     public class RemoveFromGroup
     {
-        public record Command(string UserName, Group Group) : IRequest<bool>;
-
         public class Handler : IRequestHandler<Command, bool>
         {
             private readonly IGroupManager _groupManager;

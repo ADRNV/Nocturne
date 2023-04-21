@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nocturne.Core.Managers;
 using Nocturne.Features.Messaging.Hubs;
+using Nocturne.Features.Validation;
 using Nocturne.Infrastructure.Caching;
 using Nocturne.Infrastructure.Groups;
 using Nocturne.Infrastructure.Messaging;
@@ -82,7 +85,7 @@ namespace Nocturne
             {
                 c.AddProfile<IdentityUserMappingProfile>();
             }, Assembly.GetExecutingAssembly());
-
+  
             services.AddSingleton<PasswordHasher<User>>();
 
             services.AddSingleton<IRedisCacheRepository<RefreshToken>, RedisCacheRepository<RefreshToken>>();
@@ -95,7 +98,14 @@ namespace Nocturne
 
             services.AddScoped<IJwtAuthManager, JwtAuthManager>();
 
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Startup>());
+            services.AddMediatR(cfg => {
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+                cfg.RegisterServicesFromAssemblyContaining<Startup>();
+            });
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
             services.AddSignalR(options =>
             {

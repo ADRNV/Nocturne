@@ -20,7 +20,7 @@ namespace Nocturne.Features.CurrentUser.Controller
         [HttpPost("sign-in")]
         public async Task<JwtAuthResult> SignIn([FromBody] CoreUser user)
         {
-            return await _mediator.Send(new SignIn.Command(user));
+            return await _mediator.Send(new Command(user));
         }
 
         [HttpPost("create-one")]

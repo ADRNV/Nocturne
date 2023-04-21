@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Nocturne.Core.Managers;
 using Nocturne.Features.Messaging.Clients;
+using Nocturne.Features.Messaging.Validation;
 using Nocturne.Infrastructure.Security.Entities;
 
 namespace Nocturne.Features.Messaging.Hubs
@@ -11,6 +13,15 @@ namespace Nocturne.Features.Messaging.Hubs
     public class ReciveMessage
     {
         public record Command(HubBase<IChatClient> HubContext, CoreMessage Message, string From) : IRequest<bool>;
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(c => c.Message).SetValidator(new MessageValidator());
+                RuleFor(c => c.From).NotEmpty();
+            }
+        }
 
         public class Handler : IRequestHandler<Command, bool>
         {

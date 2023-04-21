@@ -20,13 +20,13 @@ namespace Nocturne.Features.Groups
         [HttpPost("groups/add")]
         public async Task<bool> AddUserToGroup(string userName, Group group)
         {
-            return await _mediator.Send(new AddToGroup.Command(userName, group));
+            return await _mediator.Send(new Command(userName, group));
         }
 
         [HttpPost("groups/remove")]
         public async Task<bool> RemoveUserFromGroup(string userName, Group group)
         {
-            return await _mediator.Send(new RemoveFromGroup.Command(userName, group));
+            return await _mediator.Send(new Command(userName, group));
         }
     }
 }
