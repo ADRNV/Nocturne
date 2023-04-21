@@ -33,7 +33,7 @@ namespace Nocturne.Middlewares
             {
                 await HandleExceptionAsync(context, ex, _logger);
             }
-            
+
         }
 
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception, ILogger<ErrorHandlingMiddleware> logger)

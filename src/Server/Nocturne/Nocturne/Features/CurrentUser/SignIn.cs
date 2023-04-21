@@ -10,7 +10,7 @@ namespace Nocturne.Features.CurrentUser
 {
     public class SignIn
     {
-        
+
         public class CommandHandler : IRequestHandler<Command, JwtAuthResult>
         {
             private readonly SignInManager<User> _signInManager;

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Nocturne.Core.Models;
 using Nocturne.Infrastructure.Security;
 
 

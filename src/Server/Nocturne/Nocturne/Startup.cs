@@ -85,7 +85,7 @@ namespace Nocturne
             {
                 c.AddProfile<IdentityUserMappingProfile>();
             }, Assembly.GetExecutingAssembly());
-  
+
             services.AddSingleton<PasswordHasher<User>>();
 
             services.AddSingleton<IRedisCacheRepository<RefreshToken>, RedisCacheRepository<RefreshToken>>();
@@ -98,7 +98,8 @@ namespace Nocturne
 
             services.AddScoped<IJwtAuthManager, JwtAuthManager>();
 
-            services.AddMediatR(cfg => {
+            services.AddMediatR(cfg =>
+            {
                 cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
                 cfg.RegisterServicesFromAssemblyContaining<Startup>();
             });

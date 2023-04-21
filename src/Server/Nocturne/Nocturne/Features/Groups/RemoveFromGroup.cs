@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Nocturne.Core.Managers;
-using Nocturne.Core.Models;
 using Nocturne.Models;
 
 namespace Nocturne.Features.Groups
