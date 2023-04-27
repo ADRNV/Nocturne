@@ -62,22 +62,27 @@ namespace Nocturne
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = true;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
+            })
+                .AddMicrosoftAccount(options => {
+                    options.ClientId = _configuration["MSAuth:AppId"];
+                    options.ClientSecret = _configuration["MSAuth:UserSecret"];
+                 })
+                .AddJwtBearer(options =>
                 {
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtTokenOptions.Issuer,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtTokenOptions.Secret)),
-                    ValidAudience = jwtTokenOptions.Audience,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromMinutes(60)
-                };
-            });
+                    options.RequireHttpsMetadata = true;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtTokenOptions.Issuer,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtTokenOptions.Secret)),
+                        ValidAudience = jwtTokenOptions.Audience,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.FromMinutes(60)
+                    };
+                });
 
             services.AddControllers();
 
@@ -105,8 +110,6 @@ namespace Nocturne
             });
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
             services.AddSignalR(options =>
             {
@@ -137,7 +140,7 @@ namespace Nocturne
                     {securityScheme, new string[] { }}
                 });
 
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Papers API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Nocturne API", Version = "v1" });
 
                 c.AddSignalRSwaggerGen();
 
@@ -154,7 +157,7 @@ namespace Nocturne
                     builder.RequireClaim(ClaimTypes.Role, "Administrator");
                 });
 
-                c.AddPolicy("Administrator", builder =>
+                c.AddPolicy("User", builder =>
                 {
                     builder.RequireClaim(ClaimTypes.Role, "User");
                 });
@@ -165,6 +168,8 @@ namespace Nocturne
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseAuthentication();
+    
             app.UseRouting();
 
             using (var scope =
@@ -183,6 +188,8 @@ namespace Nocturne
             });
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Infrastructure.Security;
-
+using Nocturne.Infrastructure.Security.Entities;
 
 namespace Nocturne.Features.CurrentUser.Controller
 {
@@ -11,9 +13,17 @@ namespace Nocturne.Features.CurrentUser.Controller
     {
         private readonly IMediator _mediator;
 
-        public UserController(IMediator mediator)
+        private readonly UserManager<User> _userManager;
+
+        private readonly SignInManager<User> _signInManager;
+
+        public UserController(IMediator mediator, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _mediator = mediator;
+
+            _userManager = userManager;
+
+            _signInManager = signInManager;
         }
 
         [HttpPost("sign-in")]
@@ -28,5 +38,24 @@ namespace Nocturne.Features.CurrentUser.Controller
             return await _mediator.Send(new CreateAccount.Command(user));
         }
 
+        [AllowAnonymous]
+        [HttpPost("external-sign-in")]
+        public async Task<IActionResult> ExternalSignIn(string provider, string returnUrl)
+        {
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "User", new { returnUrl });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("external-sign-in-callback")]
+        public async Task<bool> ExternalLoginCallback(string returnUrl)
+        {
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false, false);
+
+            return result.Succeeded;
+        }
     }
 }
