@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Nocturne.Infrastructure.Security;
 
 namespace Nocturne.Features.Users
 {
     [ApiController]
     [Route("[controller]/api")]
-    [Authorize(Policy = "Administrator", Roles = "Administrator")]
+    [Authorize(Policy = AuthorizeConstants.Policies.Administrator, Roles = AuthorizeConstants.Roles.Administrator)]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -9,7 +9,7 @@ namespace Nocturne.Features.CurrentUser.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "User", Roles = "User, Administrator")]
+    [Authorize(Policy = $"{AuthorizeConstants.Policies.User}", Roles = $"{AuthorizeConstants.Roles.User}")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -60,9 +60,5 @@ namespace Nocturne.Features.CurrentUser.Controller
 
             return result.Succeeded;
         }
-
-        [HttpGet("check")]
-        public string Check() => "work";
-
     }
 }

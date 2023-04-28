@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Core.Models;
+using Nocturne.Infrastructure.Security;
 
 namespace Nocturne.Features.Groups
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "User, Administrator")]
+    [Authorize(Policy = $"{AuthorizeConstants.Policies.User}", Roles = $"{AuthorizeConstants.Roles.User}, {AuthorizeConstants.Roles.Administrator}")]
     public class GroupsController : ControllerBase
     {
         private readonly IMediator _mediator;

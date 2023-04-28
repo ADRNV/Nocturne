@@ -80,8 +80,7 @@ namespace Nocturne
                         ValidAudience = jwtTokenOptions.Audience,
                         ValidateAudience = true,
                         ValidateLifetime = true,
-                        ClockSkew = TimeSpan.FromMinutes(1),
-                        RequireExpirationTime = true
+                        ClockSkew = TimeSpan.FromMinutes(60)
                     };
                 });
 
@@ -153,14 +152,14 @@ namespace Nocturne
 
             services.AddAuthorization(c =>
             {
-                c.AddPolicy("Administrator", builder =>
+                c.AddPolicy(AuthorizeConstants.Policies.Administrator, builder =>
                 {
-                    builder.RequireClaim(ClaimTypes.Role, "Administrator");
+                    builder.RequireClaim(ClaimTypes.Role, AuthorizeConstants.Roles.Administrator);
                 });
 
-                c.AddPolicy("User", builder =>
+                c.AddPolicy(AuthorizeConstants.Policies.User, builder =>
                 {
-                    builder.RequireClaim(ClaimTypes.Role, "User");
+                    builder.RequireClaim(ClaimTypes.Role, AuthorizeConstants.Roles.User);
                 });
             });
 
