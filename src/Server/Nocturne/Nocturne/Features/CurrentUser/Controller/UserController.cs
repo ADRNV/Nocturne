@@ -9,6 +9,7 @@ namespace Nocturne.Features.CurrentUser.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "User", Roles = "User, Administrator")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -27,12 +28,14 @@ namespace Nocturne.Features.CurrentUser.Controller
         }
 
         [HttpPost("sign-in")]
+        [AllowAnonymous]
         public async Task<JwtAuthResult> SignIn([FromBody] CoreUser user)
         {
             return await _mediator.Send(new Command(user));
         }
 
         [HttpPost("create-one")]
+        [AllowAnonymous]
         public async Task<JwtAuthResult> CreateAccount([FromBody] CoreUser user)
         {
             return await _mediator.Send(new CreateAccount.Command(user));
@@ -57,5 +60,9 @@ namespace Nocturne.Features.CurrentUser.Controller
 
             return result.Succeeded;
         }
+
+        [HttpGet("check")]
+        public string Check() => "work";
+
     }
 }

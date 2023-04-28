@@ -7,7 +7,7 @@ namespace Nocturne.Features.Groups
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "User, Administrator")]
     public class GroupsController : ControllerBase
     {
         private readonly IMediator _mediator;

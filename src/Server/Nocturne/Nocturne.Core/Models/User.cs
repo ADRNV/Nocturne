@@ -12,6 +12,8 @@
 
         public string Pasword { get; set; }
 
+        public string Role { get; set; }
+
         public IList<Group> Groups { get; set; }
     }
 }

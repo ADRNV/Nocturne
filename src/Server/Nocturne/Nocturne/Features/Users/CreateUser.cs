@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Nocturne.Infrastructure.Security.Entities;
+using System.Security.Claims;
 
 namespace Nocturne.Features.Users
 {
@@ -34,7 +35,15 @@ namespace Nocturne.Features.Users
 
                 var createuser = await _userManager.CreateAsync(user);
 
-                await _userManager.AddToRoleAsync(user, request.Role);
+                var claims = new Claim[]
+                {
+                    new Claim(ClaimTypes.Role, request.Role),
+                    new Claim(ClaimTypes.Name, request.User.UserName),
+                    new Claim(ClaimTypes.Email, request.User.Login)
+                };
+
+                await _userManager.AddToRoleAsync(user, request.User.Role);
+                await _userManager.AddClaimsAsync(user, claims);
 
                 return createuser.Succeeded;
             }

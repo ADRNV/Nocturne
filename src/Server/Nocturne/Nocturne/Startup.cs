@@ -80,7 +80,8 @@ namespace Nocturne
                         ValidAudience = jwtTokenOptions.Audience,
                         ValidateAudience = true,
                         ValidateLifetime = true,
-                        ClockSkew = TimeSpan.FromMinutes(60)
+                        ClockSkew = TimeSpan.FromMinutes(1),
+                        RequireExpirationTime = true
                     };
                 });
 

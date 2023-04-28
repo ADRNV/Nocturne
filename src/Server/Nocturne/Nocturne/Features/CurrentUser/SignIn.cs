@@ -32,14 +32,11 @@ namespace Nocturne.Features.CurrentUser
 
                 var signIn = await _signInManager.PasswordSignInAsync(user, request.User.Pasword, true, false);
 
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Email, request.User.Login),
-                };
-
+                var claims = await _signInManager.UserManager.GetClaimsAsync(user);
+                   
                 if (signIn.Succeeded)
                 {
-                    return await _jwtAuthManager.GenerateTokens(user, claims, DateTime.Now);
+                    return await _jwtAuthManager.GenerateTokens(user, claims.ToArray(), DateTime.Now);
                 }
                 else
                 {

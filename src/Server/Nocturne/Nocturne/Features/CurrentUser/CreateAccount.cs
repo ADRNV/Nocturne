@@ -47,9 +47,11 @@ namespace Nocturne.Features.CurrentUser
 
                     await _userManager.CreateAsync(user);
 
-                    var claims = new[]
+                    var claims = new Claim[]
                     {
-                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.Role, "User"),
+                        new Claim(ClaimTypes.Name, request.User.UserName),
+                        new Claim(ClaimTypes.Email, request.User.Login)
                     };
 
                     await _signInManager.SignInAsync(user, true);
