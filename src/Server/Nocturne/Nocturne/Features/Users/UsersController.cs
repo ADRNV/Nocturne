@@ -28,7 +28,6 @@ namespace Nocturne.Features.Users
         public async Task<IEnumerable<CoreUser>> GetUsers([FromQuery]int page, [FromQuery]int pageSize) =>
            await _mediator.Send(new GetUsers.Command(page, pageSize));
 
-        [AllowAnonymous]
         [HttpGet("{userName}")]
         public async Task<CoreUser> GetUser([FromRoute] string userName) =>
            await _mediator.Send(new GetUser.Command(userName));
