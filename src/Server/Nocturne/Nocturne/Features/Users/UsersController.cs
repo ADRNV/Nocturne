@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Nocturne.Core.Models;
 using Nocturne.Infrastructure.Security;
 
 namespace Nocturne.Features.Users
@@ -26,6 +27,17 @@ namespace Nocturne.Features.Users
         [HttpGet("page/")]
         public async Task<IEnumerable<CoreUser>> GetUsers([FromQuery]int page, [FromQuery]int pageSize) =>
            await _mediator.Send(new GetUsers.Command(page, pageSize));
+
+        [AllowAnonymous]
+        [HttpGet("{userName}")]
+        public async Task<CoreUser> GetUser([FromRoute] string userName) =>
+           await _mediator.Send(new GetUser.Command(userName));
+
+        [AllowAnonymous]
+        [HttpPost("/user/{user}/online")]
+        public async Task<bool> GetUserOnline([FromBody]User user) =>
+           await _mediator.Send(new GetUserOnline.Command(user));
+
 
         [HttpPost("delete/")]
         public async Task<bool> DeleteUser([FromQuery]Guid id) =>

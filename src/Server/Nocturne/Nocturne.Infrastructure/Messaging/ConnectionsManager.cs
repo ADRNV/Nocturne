@@ -40,7 +40,7 @@ namespace Nocturne.Infrastructure.Messaging
 
             return await _cacheRepository.Insert(new Connection
             {
-                UserId = chatUser.Id,
+                UserId = chatUser.Id.ToString(),
                 ConnectionId = connectionId,
                 ConnectedAt = DateTime.Now
             });
@@ -62,7 +62,7 @@ namespace Nocturne.Infrastructure.Messaging
             }
 
             var connection = _cacheRepository.Cache
-                    .Where(c => c.ConnectionId == connectionId && c.UserId == disconectingUser.Id)
+                    .Where(c => c.ConnectionId == connectionId && c.UserId == disconectingUser.Id.ToString())
                     .First();
 
             if (connection is not null)
@@ -93,7 +93,7 @@ namespace Nocturne.Infrastructure.Messaging
             }
 
             var connections = _cacheRepository.Cache
-                  .Where(c => c.UserId == disconectingUser.Id)
+                  .Where(c => c.UserId == disconectingUser.Id.ToString())
                   .AsEnumerable();
 
             if (connections.Any())
@@ -119,7 +119,7 @@ namespace Nocturne.Infrastructure.Messaging
 
             if (connectedUser is not null)
             {
-                return _cacheRepository.Cache.Where(c => c.UserId == user.Id)
+                return _cacheRepository.Cache.Where(c => c.UserId == user.Id.ToString())
                     .Select(c => c.ConnectionId)
                     .AsEnumerable();
             }
@@ -139,7 +139,7 @@ namespace Nocturne.Infrastructure.Messaging
             var connectedUser = await _userManager.FindByNameAsync(user.UserName);
 
             return _cacheRepository.Cache
-                .Where(c => c.UserId == connectedUser.Id)
+                .Where(c => c.UserId == connectedUser.Id.ToString())
                 .IsNullOrEmpty();
         }
     }

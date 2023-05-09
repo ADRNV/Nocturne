@@ -12,6 +12,6 @@ namespace Nocturne.Infrastructure.Security.Entities
 
         public string ConnectionId { get; set; }
 
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

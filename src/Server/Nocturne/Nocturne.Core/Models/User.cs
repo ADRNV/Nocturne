@@ -14,6 +14,8 @@
 
         public string Role { get; set; }
 
+        public bool IsOnline { get; set; }
+
         public IList<Group> Groups { get; set; }
     }
 }
