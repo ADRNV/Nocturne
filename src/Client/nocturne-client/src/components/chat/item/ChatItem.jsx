@@ -1,5 +1,6 @@
 import React from "react";
 import "./ChatItem.css";
+import OptionsSelector from "../../select/OptionsSelector";
 
 
 const ChatItem = (props) => {
@@ -24,10 +25,11 @@ const ChatItem = (props) => {
 
             <div className="options">
 
-                <select>
-                    <option>Ban</option>
-                    <option>Add to contacts</option>
-                </select>
+                <OptionsSelector options={[
+                    {name:"Ban", value:"stub"},
+                    {name:"Unban", value:"stub"},
+                    {name:"Add to contacts", value:"stub"}
+                ]}/>
             
             </div>
         </div>

@@ -1,0 +1,12 @@
+.optionItem{
+    background-color: #576574;
+    font-size: 10pt;
+    color: #ecf0f1;
+}
+
+.optionsList{
+    background-color: #576574;
+    color: #ecf0f1;
+    border-radius: 3pt;
+    border: black solid 1px;
+}
