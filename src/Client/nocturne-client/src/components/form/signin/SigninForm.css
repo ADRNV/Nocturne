@@ -1,0 +1,18 @@
+.SignInForm .container{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    background-color: #34495e;
+    border: #34495e solid 3pt;
+    border-radius: 5pt;
+    padding: 10pt;
+}
+
+.SignInForm .container p{
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+.SignInForm .PrimaryButton{
+    align-self: center;
+}
