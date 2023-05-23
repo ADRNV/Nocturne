@@ -16,3 +16,10 @@
 .SignInForm .PrimaryButton{
     align-self: center;
 }
+
+.SignInForm .signWithContainer{
+    margin-top: 10pt;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

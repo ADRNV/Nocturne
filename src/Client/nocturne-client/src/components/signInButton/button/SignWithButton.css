@@ -1,0 +1,12 @@
+.SignWithButton{
+    border-radius: 3pt;
+    border: 1pt solid #ecf0f1;
+    color: #ecf0f1;
+    height: fit-content;
+    width: fit-content;
+}
+
+.SignWithButton .icon{
+    display: block;
+    color: #ecf0f1;
+}
