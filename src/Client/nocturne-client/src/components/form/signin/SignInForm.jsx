@@ -2,7 +2,7 @@ import React from 'react'
 import StringInput from '../../input/StringInput'
 import PrimaryButton from '../../button/PrimaryButton'
 import './SigninForm.css'
-import SignWithButton from '../../signInButton/button/SignWithButton'
+import ImageButton from '../../button/imageButton/ImageButton'
 import googleIcon from './googleIcon.png'
 import microsoftIcon from './microsoftIcon.png'
 
@@ -18,8 +18,8 @@ export default function SignInForm() {
             <PrimaryButton>Sign in</PrimaryButton>
             
             <div className='signWithContainer'>
-              <SignWithButton icon={googleIcon} onClick={() => alert()}/>
-              <SignWithButton icon={microsoftIcon} onClick={() => alert()}/>
+              <ImageButton icon={googleIcon} onClick={() => alert()}/>
+              <ImageButton icon={microsoftIcon} onClick={() => alert()}/>
             </div>
             
         </div>
