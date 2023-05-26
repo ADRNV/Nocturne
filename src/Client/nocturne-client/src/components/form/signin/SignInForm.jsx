@@ -3,8 +3,8 @@ import StringInput from '../../input/StringInput'
 import PrimaryButton from '../../button/PrimaryButton'
 import './SigninForm.css'
 import ImageButton from '../../button/imageButton/ImageButton'
-import googleIcon from './googleIcon.png'
-import microsoftIcon from './microsoftIcon.png'
+import googleIcon from '../../../assets/googleIcon.png'
+import microsoftIcon from '../../../assets/microsoftIcon.png'
 
 export default function SignInForm() {
   return (
