@@ -1,0 +1,29 @@
+.MessagesList{
+    display: flex;
+    flex-direction: column;
+    margin: 100pt;
+    background-color: #34495e;
+}
+
+.messageBar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.info p{
+   margin-left: 5pt;
+   margin-right: 5pt;
+   width: 150pt;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   text-align: left;
+}
+
+
