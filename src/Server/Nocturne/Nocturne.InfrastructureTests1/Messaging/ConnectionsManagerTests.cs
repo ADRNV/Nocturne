@@ -110,7 +110,7 @@ namespace Nocturne.Infrastructure.Messaging.Tests
 
             var connections = new Fixture()
                 .Build<Infrastructure.Security.Entities.Connection>()
-                .With(c => c.UserId, idUser);
+                .With(c => c.UserId, idUser.ToString());
 
             DependencyHelper.Connections.AddMany(() => connections.Create(), 3);
 
