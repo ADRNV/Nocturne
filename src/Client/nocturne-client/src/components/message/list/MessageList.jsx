@@ -21,14 +21,21 @@ export default function MessagesList({props, messages, user}) {
                 </div>  
 
                 <div className='optionsContainer'>
-                    <OptionsSelector className="optionsSelector" options={options}/>   
+                    {
+                        user === undefined ? 
+                        <p></p> :
+                        <OptionsSelector className="optionsSelector" options={options}/>   
+                    }
                 </div>
-            
             </div>
 
             
             <div className='list'>
-                {messages.map(message => <MessageItem key={messages.id} message={message}/>)}
+                {
+                    messages !== undefined ?  
+                    messages.map(message => <MessageItem key={messages.id} message={message}/>):
+                    <p>No selected chat</p>
+                }
             </div>
         </div>
     </div>

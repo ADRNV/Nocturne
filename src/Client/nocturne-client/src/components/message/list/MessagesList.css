@@ -1,8 +1,8 @@
 .MessagesList{
     display: flex;
     flex-direction: column;
-    margin: 100pt;
     background-color: #34495e;
+    width: 60%;
 }
 
 .messageBar{
@@ -20,10 +20,13 @@
 .info p{
    margin-left: 5pt;
    margin-right: 5pt;
-   width: 150pt;
    overflow: hidden;
    text-overflow: ellipsis;
    text-align: left;
+}
+
+.list{
+    justify-items: center;
 }
 
 

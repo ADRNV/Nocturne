@@ -1,0 +1,5 @@
+.MessagesPage{
+    display: flex;
+    flex-direction: row;
+    justify-items: stretch;
+}
