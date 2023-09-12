@@ -6,11 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nocturne.Core.Managers;
+using Nocturne.Core.Repositories;
 using Nocturne.Features.Messaging.Hubs;
 using Nocturne.Features.Validation;
 using Nocturne.Infrastructure.Caching;
 using Nocturne.Infrastructure.Groups;
 using Nocturne.Infrastructure.Messaging;
+using Nocturne.Infrastructure.Messaging.Models;
+using Nocturne.Infrastructure.Messaging.Storage;
 using Nocturne.Infrastructure.Securiry;
 using Nocturne.Infrastructure.Security;
 using Nocturne.Infrastructure.Security.Entities;
@@ -110,6 +113,8 @@ namespace Nocturne
             }, Assembly.GetExecutingAssembly());
 
             services.AddSingleton<PasswordHasher<User>>();
+
+            services.AddScoped<IMessagesRepository<Message>, MessagesRepository>();
 
             services.AddSingleton<IRedisCacheRepository<RefreshToken>, RedisCacheRepository<RefreshToken>>();
 

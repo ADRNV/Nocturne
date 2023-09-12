@@ -4,8 +4,11 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Nocturne.Core.Managers;
+using Nocturne.Core.Repositories;
 using Nocturne.Features.Messaging.Clients;
 using Nocturne.Features.Messaging.Validation;
+using Nocturne.Infrastructure.Messaging.Models;
+using Nocturne.Infrastructure.Messaging.Storage;
 using Nocturne.Infrastructure.Security.Entities;
 
 namespace Nocturne.Features.Messaging.Hubs
@@ -29,13 +32,17 @@ namespace Nocturne.Features.Messaging.Hubs
 
             private readonly UserManager<User> _userManager;
 
+            private readonly IMessagesRepository<Message> _messagesStore;
+
             private readonly IMapper _mapper;
 
-            public Handler(IConnectionsManager connectionsManager, UserManager<User> userManager, IMapper mapper)
+            public Handler(IConnectionsManager connectionsManager, UserManager<User> userManager, IMessagesRepository<Message> messagesStore, IMapper mapper)
             {
                 _connectionsManager = connectionsManager;
 
                 _userManager = userManager;
+
+                _messagesStore = messagesStore;
 
                 _mapper = mapper;
             }
@@ -52,6 +59,9 @@ namespace Nocturne.Features.Messaging.Hubs
                         .GetUserConnections(_mapper.Map<Core.Models.User>(user));
 
                     request.Message.From = user.UserName;
+
+                    await _messagesStore.CreateMessage(identityUser.Id,
+                        _mapper.Map<CoreMessage, Message>(request.Message));
 
                     await request.HubContext.Clients.Clients(userConnections)
                         .SendMessage(request.Message);

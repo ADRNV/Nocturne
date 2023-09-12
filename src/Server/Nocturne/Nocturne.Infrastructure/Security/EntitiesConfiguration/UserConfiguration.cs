@@ -10,6 +10,9 @@ namespace Nocturne.Infrastructure.Security.EntitiesConfiguration
         {
             builder.HasMany(ug => ug.UserGroups)
                 .WithMany(ug => ug.Users);
+
+            builder.HasMany(u => u.Messages)
+                .WithOne(m => m.User);
         }
     }
 }
