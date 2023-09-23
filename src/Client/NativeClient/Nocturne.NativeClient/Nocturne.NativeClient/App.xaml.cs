@@ -1,11 +1,5 @@
 ﻿using Nocturne.NativeClient.IoC;
 using Nocturne.NativeClient.ViewModels.Common;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Nocturne.NativeClient
@@ -26,7 +20,7 @@ namespace Nocturne.NativeClient
 
         private void ComposeObjects()
         {
-            
+
             Current.MainWindow = IocKernel.Get<MainWindow>();
             Current.MainWindow.DataContext = IocKernel.Get<IMainViewModel>();
             Current.MainWindow.Show();

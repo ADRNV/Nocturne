@@ -43,7 +43,7 @@ namespace Nocturne.NativeClient.ViewModels
 
         public void Auth()
         {
-            _client.SignInAsync(new User { Login = Login, Pasword = Password});
+            _client.SignInAsync(new User { Login = Login, Pasword = Password });
         }
     }
 }
