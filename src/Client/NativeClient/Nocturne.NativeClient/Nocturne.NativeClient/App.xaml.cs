@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Nocturne.NativeClient.IoC;
+using Nocturne.NativeClient.ViewModels.Common;
 using System.Windows;
 
 namespace Nocturne.NativeClient
@@ -13,5 +9,21 @@ namespace Nocturne.NativeClient
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            IocKernel.Initialize(new ApiClientModule(), new ViewModelsModule());
+
+            base.OnStartup(e);
+
+            ComposeObjects();
+        }
+
+        private void ComposeObjects()
+        {
+
+            Current.MainWindow = IocKernel.Get<MainWindow>();
+            Current.MainWindow.DataContext = IocKernel.Get<IMainViewModel>();
+            Current.MainWindow.Show();
+        }
     }
 }

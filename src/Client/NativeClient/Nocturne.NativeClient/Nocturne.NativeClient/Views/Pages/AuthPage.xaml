@@ -1,0 +1,38 @@
+﻿<Page x:Class="Nocturne.NativeClient.Views.Pages.AuthPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Nocturne.NativeClient.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:viewmodels="clr-namespace:Nocturne.NativeClient.ViewModels"
+      DataContext="{Binding ViewModel, Source={StaticResource ViewModelLocator}}" d:DataContext="{d:DesignInstance Type=viewmodels:AuthViewModel}"
+      Title="AuthPage" >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+             <Label>Login</Label>
+             <TextBox Text="Login"/>
+             <Label>Password</Label>
+             <TextBox Text="Password"/>
+            <Label>Registration</Label>
+            <StackPanel HorizontalAlignment="Center">
+                <Button>Sign in</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
