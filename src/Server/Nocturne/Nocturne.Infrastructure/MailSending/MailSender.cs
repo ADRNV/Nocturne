@@ -1,20 +1,20 @@
-﻿using Castle.Core.Configuration;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using MimeKit;
+using Nocturne.Core.Mails;
 using Nocturne.Core.Mails.Models;
 using Nocturne.Infrastructure.MailSending.Options;
+using MailKit.Security;
 
 namespace Nocturne.Infrastructure.MailSending
 {
-    public class MailSender
+    public class MailSender : IMailSender
     {
-        private IOptions<MailSenderOptions> _options;
+        private MailSenderOptions _options;
 
         private ILogger<MailSender> _logger;    
 
-        public MailSender(IOptions<MailSenderOptions> options, ILogger<MailSender> logger)
+        public MailSender(MailSenderOptions options, ILogger<MailSender> logger)
         {
             _options = options;    
 
@@ -29,13 +29,13 @@ namespace Nocturne.Infrastructure.MailSending
 
             smtpClient.MessageSent += (s, e) => sendend = true;
 
-            smtpClient.Connect(_options.Value.HostAddress, _options.Value.HostPort, _options.Value.HostSecureSocketOptions);
-
-            await smtpClient.AuthenticateAsync(_options.Value.HostUsername, _options.Value.HostPassword);
+            await smtpClient.ConnectAsync(_options.HostAddress, _options.HostPort, SecureSocketOptions.SslOnConnect);
+            
+            await smtpClient.AuthenticateAsync(_options.HostUsername, _options.HostPassword);
 
             var message = new MimeMessage();
 
-            message.From.Add(new MailboxAddress(_options.Value.SenderName, _options.Value.SenderName));
+            message.From.Add(new MailboxAddress(_options.SenderName, _options.SenderName));
 
             message.To.Add(new MailboxAddress(mail.To, mail.To));
 
@@ -48,6 +48,9 @@ namespace Nocturne.Infrastructure.MailSending
             message.Body = builder.ToMessageBody();
 
             await smtpClient.SendAsync(message);
+
+            await smtpClient.DisconnectAsync(true);
+            smtpClient.Dispose();
 
             _logger.LogInformation(sendend ? $"Message to {message.To} sended succesfully" : $"Faild to send {message.To}");
 

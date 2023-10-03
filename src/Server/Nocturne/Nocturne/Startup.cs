@@ -3,14 +3,18 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Nocturne.Core.Mails;
 using Nocturne.Core.Managers;
 using Nocturne.Core.Repositories;
 using Nocturne.Features.Messaging.Hubs;
 using Nocturne.Features.Validation;
 using Nocturne.Infrastructure.Caching;
 using Nocturne.Infrastructure.Groups;
+using Nocturne.Infrastructure.MailSending;
+using Nocturne.Infrastructure.MailSending.Options;
 using Nocturne.Infrastructure.Messaging;
 using Nocturne.Infrastructure.Messaging.Models;
 using Nocturne.Infrastructure.Messaging.Storage;
@@ -60,6 +64,22 @@ namespace Nocturne
                 .Get<JwtTokenOptions>();
 
             services.AddSingleton(jwtTokenOptions);
+
+            services.AddSingleton(s =>
+            {
+                var options = new MailSenderOptions
+                {
+                    SenderName = _configuration["mailSenderOptions:sender_name"],
+                    SenderEmail = _configuration["mailSenderOptions:sender_email"],
+                    HostUsername = _configuration["mailSenderOptions:host_username"],
+                    HostPort = 587,//Not reads from config
+                    HostPassword = _configuration["mailSenderOptions:host_password"],
+                    HostAddress = _configuration["mailSenderOptions:host_adress"]
+
+                };
+
+                return options;
+            });
 
             services.AddAuthentication(options =>
             {
@@ -111,6 +131,8 @@ namespace Nocturne
             {
                 c.AddProfile<IdentityUserMappingProfile>();
             }, Assembly.GetExecutingAssembly());
+
+            services.AddScoped<IMailSender, MailSender>();
 
             services.AddSingleton<PasswordHasher<User>>();
 

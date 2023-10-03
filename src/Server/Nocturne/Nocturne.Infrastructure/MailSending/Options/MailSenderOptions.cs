@@ -4,18 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace Nocturne.Infrastructure.MailSending.Options
 {
-    public class MailSenderOptions : IOptions<MailSenderOptions>
+    public class MailSenderOptions
     {
-        public MailSenderOptions(MailSenderOptions mailSenderOptions)
-        {
-            Value = mailSenderOptions;
-        }
-
         public MailSenderOptions()
         {
-            
         }
-        public MailSenderOptions Value { get; private set; }
 
         [JsonPropertyName("host_adress")]
         public string HostAddress { get; set; }
@@ -29,8 +22,8 @@ namespace Nocturne.Infrastructure.MailSending.Options
         [JsonPropertyName("host_password")]
         public string HostPassword { get; set; }
 
-        [JsonPropertyName("host_secure_socket_options")]
-        public SecureSocketOptions HostSecureSocketOptions { get; set; }
+        //[JsonPropertyName("host_secure_socket_options")]
+        //public SecureSocketOptions HostSecureSocketOptions { get; set; }
 
         [JsonPropertyName("sender_email")]
         public string SenderEmail { get; set; }

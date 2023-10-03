@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Nocturne.Core.Mails;
+using Nocturne.Core.Mails.Models;
 using Nocturne.Infrastructure.Security;
 using Nocturne.Infrastructure.Security.Entities;
 using Nocturne.Models;
@@ -23,15 +25,18 @@ namespace Nocturne.Features.CurrentUser
 
             private readonly IJwtAuthManager _jwtAuthManager;
 
+            private readonly IMailSender _mailSender;
+
             private readonly IMapper _mapper;
 
             public CommandHendler(SignInManager<User> signInManager, UserManager<User> userManager,
-                IPasswordHasher<User> passwordHasher, IJwtAuthManager jwtAuthManager, IMapper mapper)
+                IPasswordHasher<User> passwordHasher, IJwtAuthManager jwtAuthManager, IMailSender mailSender, IMapper mapper)
             {
                 _signInManager = signInManager;
                 _userManager = userManager;
                 _passwordHasher = passwordHasher;
                 _jwtAuthManager = jwtAuthManager;
+                _mailSender = mailSender;
                 _mapper = mapper;
             }
 
@@ -53,6 +58,12 @@ namespace Nocturne.Features.CurrentUser
                         new Claim(ClaimTypes.Name, request.User.UserName),
                         new Claim(ClaimTypes.Email, request.User.Login)
                     };
+
+                    await _mailSender.SendMail(new ConfirmEmail("Nocturne", user.Email) 
+                    { 
+                        Subject = "Account confirmation",
+                        Content = "Hello, confirm you account on Nocturne"
+                    });
 
                     await _signInManager.SignInAsync(user, true);
 
