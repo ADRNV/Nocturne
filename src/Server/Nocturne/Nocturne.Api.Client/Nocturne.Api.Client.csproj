@@ -15,4 +15,10 @@
     <ProjectReference Include="..\Nocturne\Nocturne.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="Nocturne.Core.Models.Message">
+      <Alias>CoreMessage</Alias>
+    </Using>
+  </ItemGroup>
+
 </Project>

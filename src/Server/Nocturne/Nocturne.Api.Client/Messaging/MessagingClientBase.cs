@@ -1,5 +1,4 @@
 ﻿using Nocturne.Core.Clients;
-using CoreMessage = Nocturne.Core.Models.Message;
 
 namespace Nocturne.Api.Client.Messaging
 {

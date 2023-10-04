@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
-using Nocturne.Core.Models;
 
 namespace Nocturne.Api.Client.Messaging
 {
@@ -16,7 +15,7 @@ namespace Nocturne.Api.Client.Messaging
         /// <param name="hubUri"></param>
         /// <param name="accessToken"></param>
         /// <param name="recivedMessageCallback"></param>
-        public MessagingClient(string hubUri, string accessToken, Func<Message, string, bool> recivedMessageCallback)
+        public MessagingClient(string hubUri, string accessToken, Func<CoreMessage, string, bool> recivedMessageCallback)
         {
             AccessToken = accessToken;
 
@@ -32,7 +31,7 @@ namespace Nocturne.Api.Client.Messaging
             _connection.On("ReciveMessage", RecivedMessageCallback);
         }
 
-        public override Func<Message, string, bool> RecivedMessageCallback { get; set; }
+        public override Func<CoreMessage, string, bool> RecivedMessageCallback { get; set; }
 
         public string AccessToken { get; private set; }
 
@@ -40,7 +39,7 @@ namespace Nocturne.Api.Client.Messaging
 
         public override async Task Stop() => await _connection.StopAsync();
 
-        public override async Task<bool> SendMessage(Message message, string to)
+        public override async Task<bool> SendMessage(CoreMessage message, string to)
         {
             return await _connection.InvokeAsync<bool>("SendMessage", message, to);
         }
