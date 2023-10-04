@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Nocturne.NativeClient.Views.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      xmlns:viewmodels="clr-namespace:Nocturne.NativeClient.ViewModels"
+      xmlns:viewmodels="clr-namespace:Nocturne.NativeClient.ViewModels.Auth"
       DataContext="{Binding ViewModel, Source={StaticResource ViewModelLocator}}" d:DataContext="{d:DesignInstance Type=viewmodels:AuthViewModel}"
       Title="AuthPage" >
 

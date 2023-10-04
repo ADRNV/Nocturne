@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MvvmCross.Commands;
+using Nocturne.Api.Client;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nocturne.NativeClient.ViewModels.Common
 {
-    internal interface IContactsViewModel
+    public interface IContactsViewModel
     {
+        IEnumerable<Group> Contacts { get; set; }
+
+        IMvxAsyncCommand GetContactsCommand { get; }
     }
 }

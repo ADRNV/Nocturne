@@ -5,10 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Nocturne.NativeClient.Views.Pages.ContactsPage"
       mc:Ignorable="d" 
+      xmlns:viewmodels="clr-namespace:Nocturne.NativeClient.ViewModels.Contacts"
+DataContext="{Binding ViewModel, Source={StaticResource ViewModelLocator}}" d:DataContext="{d:DesignInstance Type=viewmodels:ContactsViewModel}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ContactsPage">
     <Grid>
-        <ListView ItemsSource="{Binding Groups}">
+        <ListView ItemsSource="{Binding Contacts}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

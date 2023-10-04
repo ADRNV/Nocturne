@@ -1,5 +1,5 @@
 ﻿using Ninject.Modules;
-using Nocturne.ApiClient;
+using Nocturne.Api.Client;
 using System.Net.Http;
 
 namespace Nocturne.NativeClient.IoC

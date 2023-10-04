@@ -1,5 +1,5 @@
 ﻿using MvvmCross.Commands;
-using Nocturne.ApiClient;
+using Nocturne.Api.Client;
 using Nocturne.NativeClient.ViewModels.Common;
 
 namespace Nocturne.NativeClient.ViewModels.Auth
