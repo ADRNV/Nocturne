@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Nocturne.Core.Models;
 using Nocturne.Infrastructure.Security;
 using Nocturne.Infrastructure.Security.Entities;
+using System.Collections;
+using System.Security.Claims;
 
 namespace Nocturne.Features.CurrentUser.Controller
 {
@@ -14,11 +17,11 @@ namespace Nocturne.Features.CurrentUser.Controller
     {
         private readonly IMediator _mediator;
 
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<CoreUser> _userManager;
 
-        private readonly SignInManager<User> _signInManager;
+        private readonly SignInManager<EntityUser> _signInManager;
 
-        public UserController(IMediator mediator, UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(IMediator mediator, UserManager<CoreUser> userManager, SignInManager<EntityUser> signInManager)
         {
             _mediator = mediator;
 
@@ -59,6 +62,12 @@ namespace Nocturne.Features.CurrentUser.Controller
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false, false);
 
             return result.Succeeded;
+        }
+
+        [HttpGet("groups")]
+        public async Task<IEnumerable<Group>> GetUserGroups()
+        {
+            return await _mediator.Send(new GetUserGroups.Command(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))));
         }
     }
 }

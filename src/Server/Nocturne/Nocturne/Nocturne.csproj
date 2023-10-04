@@ -34,4 +34,10 @@
     <ProjectReference Include="..\Nocturne.Infrastructure\Nocturne.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="Nocturne.Infrastructure.Security.Entities.User">
+      <Alias>EntityUser</Alias>
+    </Using>
+  </ItemGroup>
+
 </Project>

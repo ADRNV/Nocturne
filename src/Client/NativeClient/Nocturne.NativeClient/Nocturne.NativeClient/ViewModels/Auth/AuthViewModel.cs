@@ -2,7 +2,7 @@
 using Nocturne.ApiClient;
 using Nocturne.NativeClient.ViewModels.Common;
 
-namespace Nocturne.NativeClient.ViewModels
+namespace Nocturne.NativeClient.ViewModels.Auth
 {
     public class AuthViewModel : ViewModelBase, IAuthViewModel
     {

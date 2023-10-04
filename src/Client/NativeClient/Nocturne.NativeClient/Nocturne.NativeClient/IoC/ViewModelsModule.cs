@@ -1,5 +1,5 @@
 ﻿using Ninject.Modules;
-using Nocturne.NativeClient.ViewModels;
+using Nocturne.NativeClient.ViewModels.Auth;
 using Nocturne.NativeClient.ViewModels.Common;
 using Nocturne.NativeClient.ViewModels.MainWindow;
 
