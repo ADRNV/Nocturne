@@ -24,10 +24,10 @@ namespace Nocturne.Features.Users
 
             public async Task<IEnumerable<CoreUser>> Handle(Command request, CancellationToken cancellationToken)
             {
-               var users = await Task.Run(() => _userManager.Users
-                    .Skip((request.Page - 1) * request.PageSize)
-                    .Take(request.PageSize)
-                    .AsEnumerable());
+                var users = await Task.Run(() => _userManager.Users
+                     .Skip((request.Page - 1) * request.PageSize)
+                     .Take(request.PageSize)
+                     .AsEnumerable());
 
                 return _mapper.Map<IEnumerable<CoreUser>>(users);
             }

@@ -8,7 +8,6 @@ using Nocturne.Core.Repositories;
 using Nocturne.Features.Messaging.Clients;
 using Nocturne.Features.Messaging.Validation;
 using Nocturne.Infrastructure.Messaging.Models;
-using Nocturne.Infrastructure.Messaging.Storage;
 using Nocturne.Infrastructure.Security.Entities;
 
 namespace Nocturne.Features.Messaging.Hubs

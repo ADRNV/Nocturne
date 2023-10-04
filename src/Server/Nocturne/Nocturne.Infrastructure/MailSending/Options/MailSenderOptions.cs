@@ -1,6 +1,4 @@
-﻿using MailKit.Security;
-using Microsoft.Extensions.Options;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Nocturne.Infrastructure.MailSending.Options
 {

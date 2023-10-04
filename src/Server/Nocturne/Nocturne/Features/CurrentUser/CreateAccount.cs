@@ -59,8 +59,8 @@ namespace Nocturne.Features.CurrentUser
                         new Claim(ClaimTypes.Email, request.User.Login)
                     };
 
-                    await _mailSender.SendMail(new ConfirmEmail("Nocturne", user.Email) 
-                    { 
+                    await _mailSender.SendMail(new ConfirmEmail("Nocturne", user.Email)
+                    {
                         Subject = "Account confirmation",
                         Content = "Hello, confirm you account on Nocturne"
                     });

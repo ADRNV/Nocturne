@@ -25,7 +25,7 @@ namespace Nocturne.Features.Users
         /// <param name="pageSize">Count of users on page</param>
         /// <returns></returns>
         [HttpGet("page/")]
-        public async Task<IEnumerable<CoreUser>> GetUsers([FromQuery]int page, [FromQuery]int pageSize) =>
+        public async Task<IEnumerable<CoreUser>> GetUsers([FromQuery] int page, [FromQuery] int pageSize) =>
            await _mediator.Send(new GetUsers.Command(page, pageSize));
 
         [HttpGet("{userName}")]
@@ -34,16 +34,16 @@ namespace Nocturne.Features.Users
 
         [AllowAnonymous]
         [HttpPost("/user/{user}/online")]
-        public async Task<bool> GetUserOnline([FromBody]User user) =>
+        public async Task<bool> GetUserOnline([FromBody] User user) =>
            await _mediator.Send(new GetUserOnline.Command(user));
 
 
         [HttpPost("delete/")]
-        public async Task<bool> DeleteUser([FromQuery]Guid id) =>
+        public async Task<bool> DeleteUser([FromQuery] Guid id) =>
             await _mediator.Send(new DeleteUser.Command(id));
 
         [HttpPost("create")]
-        public async Task<bool> CreateUser([FromBody]CoreUser user, string role) =>
+        public async Task<bool> CreateUser([FromBody] CoreUser user, string role) =>
             await _mediator.Send(new CreateUser.Command(user, role));
     }
 }

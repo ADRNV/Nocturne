@@ -12,7 +12,7 @@ namespace Nocturne.Features.Users
 
         public class Handler : IRequestHandler<Command, bool>
         {
-            private readonly IUserStore<User>_userManager;
+            private readonly IUserStore<User> _userManager;
 
             public Handler(IUserStore<User> userManager)
             {
@@ -23,7 +23,7 @@ namespace Nocturne.Features.Users
             {
                 var user = await _userManager.FindByIdAsync(request.Id.ToString(), cancellationToken);
 
-                if(user is not null)
+                if (user is not null)
                 {
                     var delete = await _userManager.DeleteAsync(user, cancellationToken);
 
@@ -33,7 +33,7 @@ namespace Nocturne.Features.Users
                 {
                     throw new RestException(HttpStatusCode.NotFound);
                 }
-               
+
             }
         }
     }

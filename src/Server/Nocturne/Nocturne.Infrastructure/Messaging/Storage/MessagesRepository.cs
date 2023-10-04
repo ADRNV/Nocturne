@@ -34,7 +34,7 @@ namespace Nocturne.Infrastructure.Messaging.Storage
             {
                 throw new InvalidOperationException("User not found");
             }
-          
+
         }
 
         public async Task<bool> RemoveMessage(Guid userId, Message message)
@@ -54,7 +54,7 @@ namespace Nocturne.Infrastructure.Messaging.Storage
 
                 await _usersContext.SaveChangesAsync();
 
-                return await _usersContext.Messages.FindAsync(new object[] {message.Id}) is null;
+                return await _usersContext.Messages.FindAsync(new object[] { message.Id }) is null;
             }
             else
             {

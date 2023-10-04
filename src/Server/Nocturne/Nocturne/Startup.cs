@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nocturne.Core.Mails;
@@ -86,10 +85,11 @@ namespace Nocturne
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddMicrosoftAccount(options => {
+                .AddMicrosoftAccount(options =>
+                {
                     options.ClientId = _configuration["MSAuth:AppId"];
                     options.ClientSecret = _configuration["MSAuth:UserSecret"];
-                 })
+                })
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = true;
@@ -113,7 +113,7 @@ namespace Nocturne
                             var accessToken = context.Request.Query["access_token"];
 
                             var path = context.HttpContext.Request.Path;
-                            
+
                             if (!string.IsNullOrEmpty(accessToken) &&
                                 (path.StartsWithSegments("/hubs/chat")))
                             {
@@ -214,7 +214,7 @@ namespace Nocturne
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseAuthentication();
-    
+
             app.UseRouting();
 
             using (var scope =

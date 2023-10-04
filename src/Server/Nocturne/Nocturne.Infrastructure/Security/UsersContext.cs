@@ -23,7 +23,7 @@ namespace Nocturne.Infrastructure.Securiry
             builder.ApplyConfiguration(new UserConfiguration());
 
             builder.ApplyConfiguration(new RoleConfiguration());
-            
+
             base.OnModelCreating(builder);
         }
     }

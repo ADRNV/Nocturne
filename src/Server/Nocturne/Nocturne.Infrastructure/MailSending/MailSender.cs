@@ -1,10 +1,10 @@
 ﻿using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Logging;
 using MimeKit;
 using Nocturne.Core.Mails;
 using Nocturne.Core.Mails.Models;
 using Nocturne.Infrastructure.MailSending.Options;
-using MailKit.Security;
 
 namespace Nocturne.Infrastructure.MailSending
 {
@@ -12,11 +12,11 @@ namespace Nocturne.Infrastructure.MailSending
     {
         private MailSenderOptions _options;
 
-        private ILogger<MailSender> _logger;    
+        private ILogger<MailSender> _logger;
 
         public MailSender(MailSenderOptions options, ILogger<MailSender> logger)
         {
-            _options = options;    
+            _options = options;
 
             _logger = logger;
         }
@@ -30,7 +30,7 @@ namespace Nocturne.Infrastructure.MailSending
             smtpClient.MessageSent += (s, e) => sendend = true;
 
             await smtpClient.ConnectAsync(_options.HostAddress, _options.HostPort, SecureSocketOptions.SslOnConnect);
-            
+
             await smtpClient.AuthenticateAsync(_options.HostUsername, _options.HostPassword);
 
             var message = new MimeMessage();

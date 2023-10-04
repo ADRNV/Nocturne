@@ -1,5 +1,4 @@
 ﻿using Nocturne.Core.Models;
-using System.Data.Common;
 
 namespace Nocturne.Core.Clients
 {

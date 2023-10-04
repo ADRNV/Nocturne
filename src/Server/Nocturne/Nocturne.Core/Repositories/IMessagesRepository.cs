@@ -1,6 +1,4 @@
-﻿using Nocturne.Core.Models;
-
-namespace Nocturne.Core.Repositories
+﻿namespace Nocturne.Core.Repositories
 {
     public interface IMessagesRepository<T>
     {

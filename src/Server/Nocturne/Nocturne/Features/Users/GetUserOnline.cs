@@ -18,7 +18,7 @@ namespace Nocturne.Features.Users
 
             public async Task<bool> Handle(Command request, CancellationToken cancellationToken) =>
                 await _connectionsManager.IsConnectedUser(request.User);
-            
+
         }
     }
 }

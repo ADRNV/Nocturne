@@ -23,7 +23,8 @@ namespace Nocturne.Api.Client.Messaging
             RecivedMessageCallback = recivedMessageCallback;
 
             _connection = new HubConnectionBuilder()
-                .WithUrl(hubUri, o => {
+                .WithUrl(hubUri, o =>
+                {
                     o.AccessTokenProvider = () => Task.FromResult(AccessToken);
                 })
                 .Build();

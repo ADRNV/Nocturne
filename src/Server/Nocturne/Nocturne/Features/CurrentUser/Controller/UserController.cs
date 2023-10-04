@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Core.Models;
 using Nocturne.Infrastructure.Security;
-using Nocturne.Infrastructure.Security.Entities;
-using System.Collections;
 using System.Security.Claims;
 
 namespace Nocturne.Features.CurrentUser.Controller

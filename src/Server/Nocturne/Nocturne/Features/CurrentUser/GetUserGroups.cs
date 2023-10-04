@@ -1,13 +1,8 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Nocturne.Core.Managers;
-using Nocturne.Core.Models;
-using Nocturne.Infrastructure.Security.Entities;
-using Nocturne.Models;
-using System.Windows.Input;
-using System.Net;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+using Nocturne.Infrastructure.Security.Entities;
 
 namespace Nocturne.Features.CurrentUser
 {

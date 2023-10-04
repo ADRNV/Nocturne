@@ -4,7 +4,7 @@
     {
         public MailBase(string from, string to)
         {
-            
+
         }
 
         public string From { get; set; }

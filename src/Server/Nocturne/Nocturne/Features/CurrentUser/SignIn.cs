@@ -4,7 +4,6 @@ using Nocturne.Infrastructure.Security;
 using Nocturne.Infrastructure.Security.Entities;
 using Nocturne.Models;
 using System.Net;
-using System.Security.Claims;
 
 namespace Nocturne.Features.CurrentUser
 {
@@ -33,7 +32,7 @@ namespace Nocturne.Features.CurrentUser
                 var signIn = await _signInManager.PasswordSignInAsync(user, request.User.Pasword, true, false);
 
                 var claims = await _signInManager.UserManager.GetClaimsAsync(user);
-                   
+
                 if (signIn.Succeeded)
                 {
                     return await _jwtAuthManager.GenerateTokens(user, claims.ToArray(), DateTime.Now);

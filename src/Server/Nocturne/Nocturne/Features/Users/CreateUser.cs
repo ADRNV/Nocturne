@@ -18,7 +18,7 @@ namespace Nocturne.Features.Users
 
             private readonly IMapper _mapper;
 
-            public Handler(UserManager<User> userManager, IPasswordHasher<User> passwordHasher,IMapper mapper)
+            public Handler(UserManager<User> userManager, IPasswordHasher<User> passwordHasher, IMapper mapper)
             {
                 _userManager = userManager;
 
