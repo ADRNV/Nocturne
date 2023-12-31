@@ -6,6 +6,6 @@ It is messager project on ASP.NET with <strong>authorization, authentication, JW
 ![](https://img.shields.io/badge/-Redis-red)
 # Requrements to deploy
 To delpoy this project you need:
-1. <a href="https://dotnet.microsoft.com/en-us/download/dotnet/6.0">NET 6.0</a> for build.
+1. <a href="https://dotnet.microsoft.com/en-us/download/dotnet/7.0">NET 7.0</a> for build.
 2. <a href="https://redis.io/">Redis</a> for chaching on your machine or on WSL.
 3. <a href="https://www.microsoft.com/ru-ru/sql-server/sql-server-downloads">MS SQL</a> for data store.
