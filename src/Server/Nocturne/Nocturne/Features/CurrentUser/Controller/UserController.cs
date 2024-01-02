@@ -15,11 +15,11 @@ namespace Nocturne.Features.CurrentUser.Controller
     {
         private readonly IMediator _mediator;
 
-        private readonly UserManager<CoreUser> _userManager;
+        private readonly UserManager<EntityUser> _userManager;
 
         private readonly SignInManager<EntityUser> _signInManager;
 
-        public UserController(IMediator mediator, UserManager<CoreUser> userManager, SignInManager<EntityUser> signInManager)
+        public UserController(IMediator mediator, UserManager<EntityUser> userManager, SignInManager<EntityUser> signInManager)
         {
             _mediator = mediator;
 
@@ -30,9 +30,9 @@ namespace Nocturne.Features.CurrentUser.Controller
 
         [HttpPost("sign-in")]
         [AllowAnonymous]
-        public async Task<JwtAuthResult> SignIn([FromBody] CoreUser user)
+        public async Task<JwtAuthResult> SignIn([FromQuery]string userName, [FromQuery]string password)
         {
-            return await _mediator.Send(new Command(user));
+            return await _mediator.Send(new SignIn.Command(userName, password));
         }
 
         [HttpPost("create-one")]

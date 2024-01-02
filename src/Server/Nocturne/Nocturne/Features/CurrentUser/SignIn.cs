@@ -9,8 +9,9 @@ namespace Nocturne.Features.CurrentUser
 {
     public class SignIn
     {
+        public record Command(string Login, string Password) : IRequest<JwtAuthResult>;
 
-        public class CommandHandler : IRequestHandler<Command, JwtAuthResult>
+        public class CommandHandler : IRequestHandler<SignIn.Command, JwtAuthResult>
         {
             private readonly SignInManager<User> _signInManager;
 
@@ -25,11 +26,11 @@ namespace Nocturne.Features.CurrentUser
                 _jwtAuthManager = jwtAuthManager;
             }
 
-            public async Task<JwtAuthResult> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<JwtAuthResult> Handle(SignIn.Command request, CancellationToken cancellationToken)
             {
-                var user = await _signInManager.UserManager.FindByEmailAsync(request.User.Login);
+                var user = await _signInManager.UserManager.FindByEmailAsync(request.Login);
 
-                var signIn = await _signInManager.PasswordSignInAsync(user, request.User.Pasword, true, false);
+                var signIn = await _signInManager.PasswordSignInAsync(user, request.Password, true, false);
 
                 var claims = await _signInManager.UserManager.GetClaimsAsync(user);
 
