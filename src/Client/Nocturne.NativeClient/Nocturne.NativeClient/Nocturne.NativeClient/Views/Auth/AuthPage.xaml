@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Nocturne.NativeClient.Views.Auth.AuthPage"
+             Title="AuthPage">
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300">
+        <Label Text="{StaticResource Login}"></Label>
+        <Entry Placeholder="{StaticResource Login}" Text="{Binding UserName}"></Entry>
+        <Label Text="{StaticResource Password}"></Label>
+        <Entry Placeholder="{StaticResource Password}" Text="{Binding Password}"></Entry>
+        <Button Command="{Binding SignInCommand}" Text="{StaticResource Login}"/>
+    </VerticalStackLayout>
+</ContentPage>
