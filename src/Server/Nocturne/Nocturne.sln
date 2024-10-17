@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nocturne.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nocturne.InfrastructureTests", "Nocturne.InfrastructureTests1\Nocturne.InfrastructureTests.csproj", "{CD78C8FD-C611-4C8F-BD61-A43F423CFAC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nocturne.Api.Client", "Nocturne.Api.Client\Nocturne.Api.Client.csproj", "{0D001BE4-0D31-4F67-B797-D6AC1E0F2AE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nocturne.Api.Client", "Nocturne.Api.Client\Nocturne.Api.Client.csproj", "{0D001BE4-0D31-4F67-B797-D6AC1E0F2AE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
