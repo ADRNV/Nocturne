@@ -1,0 +1,28 @@
+<div class="container d-flex align-items-center justify-content-center">
+    <form #authForm="ngForm">
+        <div class="col-lg-4">
+            <mat-form-field>
+                <input matInput placeholder="username"
+                ngModel
+                name="username"
+                type="text"
+                id="email"
+                required
+                [minLength]="8"/>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4">
+            <mat-form-field>
+                <input matInput placeholder="password"
+                ngModel
+                name="password"
+                type="password"
+                required
+                [minLength]="8"/>
+            </mat-form-field>
+        </div>
+        <div class="col3 justify-content-center align-items-center g-2">
+            <button [disabled]="!authForm.valid" mat-stroked-button (click)="onLogin(authForm)">Login</button>      
+        </div>        
+    </form>   
+</div>
