@@ -37,9 +37,16 @@ namespace Nocturne.Features.CurrentUser.Controller
 
         [HttpPost("create-one")]
         [AllowAnonymous]
-        public async Task<JwtAuthResult> CreateAccount([FromBody] CoreUser user)
+        public async Task<JwtAuthResult> CreateAccount(string login, string userName, string password)
         {
-            return await _mediator.Send(new CreateAccount.Command(user));
+            return await _mediator.Send(new CreateAccount.Command(
+                new CoreUser()
+                {
+                    Login = login,
+                    UserName = userName,
+                    Pasword = password
+                }
+            ));
         }
 
         [AllowAnonymous]
