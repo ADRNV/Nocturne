@@ -1,13 +1,24 @@
 <nav class="nav justify-content-lg-between">
-    <div class="row justify-content-start align-items-start">
+    <div class="row justify-content-between co align-items-center">
         <div class="col">
             <h1 class="display-5">Nocturne</h1>
         </div>
-    </div>
-    <div class="row justify-content-start align-items-center">
-        <div class="col"><a class="nav-link" routerLink="about">About</a></div>
-        <div class="col"><a class="nav-link" routerLink="auth">SignIn</a></div>
-        <div class="col"><a class="nav-link" routerLink="register">Create</a></div>
-        <div class="col"><a class="nav-link" routerLink="administration/users">Users</a></div>
+        <div class="col">
+            <button mat-button [matMenuTriggerFor]="account_menu">Account</button>
+            <mat-menu #account_menu="matMenu">
+                <button mat-menu-item routerLink="about">About</button>
+                <button mat-menu-item routerLink="auth" *ngIf="!logined">SignIn</button>
+                <button mat-menu-item routerLink="register" *ngIf="!logined">Create</button>
+                <button mat-menu-item (click)="onLogout()" *ngIf="logined">Logout</button>
+            </mat-menu>
+        </div>
+
+        <div class="col">
+            <button mat-button [matMenuTriggerFor]="menu" *ngIf="logined">Administration</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item  routerLink="administration/users">Users</button>
+            </mat-menu>
+        </div>
+        
     </div>
 </nav>

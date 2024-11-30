@@ -5,6 +5,7 @@ import { MatFormField, MatInput, MatInputModule } from '@angular/material/input'
 import { AuthComponent } from '../../features/auth/auth/auth.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserModule } from '@angular/platform-browser';
+import {MatMenuModule} from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
@@ -40,7 +41,8 @@ import { AuthInterceptor } from '../../shared/interceptors/AuthInceptor';
     MatSnackBarModule,
     MatFormFieldModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule
   ],
   exports:[
     AuthComponent,

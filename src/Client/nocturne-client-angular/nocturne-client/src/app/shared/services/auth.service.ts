@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { User } from '../../models/user';
 import { RefreshToken, Token } from '../../models/token';
 import { response } from 'express';
@@ -13,7 +13,7 @@ export class AuthService {
 
   private baseUrl: string;
 
-  private token = new BehaviorSubject<Token | null>(null);
+  public token = new BehaviorSubject<Token | null>(null);
 
   constructor(private httpClient: HttpClient) { 
     this.baseUrl = environment.apiUrl;
@@ -35,6 +35,14 @@ export class AuthService {
           this.handleAuthetication(response.accessToken, response.refreshToken)
         })
       );
+  }
+
+  logout() : Observable<Token | null> {
+    this.token.next(null);
+    
+    localStorage.setItem('AuthToken', '');
+
+    return this.token.asObservable();
   }
 
   create(email: string, userName:string, password: string, image: string, role: string){

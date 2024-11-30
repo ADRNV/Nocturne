@@ -14,11 +14,12 @@ import { error } from 'console';
 export class AuthComponent {
   
   private _snackBar = inject(MatSnackBar);
+
   constructor(private authService: AuthService) {
 
   }
 
-  onLogin(form:NgForm){
+  onLogin(form: NgForm){
 
     let email = form.control.value.username;
     let password = form.control.value.password;
