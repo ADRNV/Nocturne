@@ -1,0 +1,93 @@
+<div class="row justify-content-start align-items-center g-0">
+    <div class="col-lg-4">
+        <h3>
+            Connect to us now!
+        </h3>
+    </div>
+    <div class="col-lg-5 g-5">    
+        <form [formGroup]="registrationForm" (submit)="register()">
+            <div class="row justify-content-start align-items-center g-5">
+                <mat-form-field  appearance="outline">
+                    <mat-label for="email">Email</mat-label>
+                    <input id="email" 
+                           name="email"
+                           formControlName='email'
+                           matInput/>
+                    @if(registrationForm.touched && !registrationForm.controls['email'].valid){
+                        <mat-error>Invalid email</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row justify-content-start align-items-center g-5">
+                <mat-form-field  appearance="outline">
+                    <mat-label for="username">Username</mat-label>
+                    <input  
+                        id="username" 
+                        name="username"
+                        formControlName='username'
+                    matInput/>
+                    @if(registrationForm.touched && !registrationForm.controls['username'].valid){
+                        <mat-error>Username must be greather that 6</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row justify-content-start align-items-center g-2">
+                <mat-form-field appearance="outline">
+                    <mat-label for="password">Password</mat-label>
+                    <input placeholder="Password" 
+                        appShowFiled
+                        type="password"  
+                        id="password" 
+                        name="password"
+                        formControlName='password'
+                        #passwordField 
+                    matInput/>
+                    <button 
+                    mat-icon-button
+                    matIconSuffix
+                    type="button"
+                    (click)="switchPasswordShow(passwordField)">
+                        <mat-icon>{{ passwordField.type === "text" ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    @if(registrationForm.touched && !registrationForm.controls['password'].valid){
+                        <mat-error>Password must be greather 8</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row justify-content-start align-items-center g-2">
+                <mat-form-field appearance="outline">
+                    <mat-label for="passwordConfirm">Confirm password</mat-label>
+                    <input placeholder="Confirm password" 
+                        type="password" 
+                        id="passwordConfirm" 
+                        name="passwordConfirm"
+                        formControlName='passwordConfirm'
+                        #passwordConfirmField 
+                    matInput/>
+                    <button mat-icon-button
+                            matSuffix
+                            (click)="switchPasswordShow(passwordConfirmField)"
+                            type="button"
+                           >
+                        <mat-icon>{{ passwordConfirmField.type === "text" ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+
+                    @if(registrationForm.touched && !registrationForm.controls['password'].valid){
+                        <mat-error>{{registrationForm.controls['password'].errors}}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row justify-content-start align-items-center g-2">
+                <mat-label>User photo</mat-label>
+            </div>
+            <div class="col-lg-4">
+                <input type="file"/>
+            </div>  
+        </form>
+        <div class="row justify-content-start align-items-center g-2">
+            <button [disabled]="!registrationForm.valid" mat-raised-button type="submit" (click)="register()">Create</button>
+        </div>
+    </div>
+</div>
+
+

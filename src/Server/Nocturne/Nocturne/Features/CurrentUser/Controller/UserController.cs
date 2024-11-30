@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Core.Models;
 using Nocturne.Infrastructure.Security;
+using Nocturne.Models;
 using System.Security.Claims;
 
 namespace Nocturne.Features.CurrentUser.Controller
@@ -70,9 +71,9 @@ namespace Nocturne.Features.CurrentUser.Controller
         }
 
         [HttpGet("groups")]
-        public async Task<IEnumerable<Group>> GetUserGroups()
+        public async Task<UserGroupsRecordSet> GetUserGroups(int page, int size)
         {
-            return await _mediator.Send(new GetUserGroups.Command(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+            return await _mediator.Send(new GetUserGroups.Command(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)), page, size));
         }
     }
 }

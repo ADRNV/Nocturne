@@ -3,14 +3,15 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Nocturne.Infrastructure.Security.Entities;
+using Nocturne.Models;
 
 namespace Nocturne.Features.CurrentUser
 {
     public class GetUserGroups
     {
-        public record Command(Guid UserId) : IRequest<IEnumerable<CoreGroup>>;
+        public record Command(Guid UserId, int Page, int PageSize) : IRequest<UserGroupsRecordSet>;
 
-        public class Handler : IRequestHandler<Command, IEnumerable<CoreGroup>>
+        public class Handler : IRequestHandler<Command, UserGroupsRecordSet>
         {
             private readonly UserManager<EntityUser> _userManager;
 
@@ -23,18 +24,27 @@ namespace Nocturne.Features.CurrentUser
                 _mapper = mapper;
             }
 
-            public async Task<IEnumerable<CoreGroup>?> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<UserGroupsRecordSet?> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                var groups = await _userManager.Users
+                var allUserGroups = await _userManager.Users
                     .Include(g => g.UserGroups)
                     .AsNoTracking()
+                    //.Skip((request.Page - 1) * request.PageSize)
+                    //.Take(request.PageSize)
                     .Where(u => u.Id == request.UserId)
                     .Select(u => u.UserGroups)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync()
+                    ;
 
-                return groups is null ? Enumerable.Empty<CoreGroup>() :
-                    _mapper.Map<IEnumerable<UserGroup>, IEnumerable<CoreGroup>>(groups.AsEnumerable());
+                var page = allUserGroups
+                    .Skip((request.Page) * request.PageSize)
+                    .Take(request.PageSize);
+
+                var records = allUserGroups is null ? Enumerable.Empty<CoreGroup>() :
+                    _mapper.Map<IEnumerable<UserGroup>, IEnumerable<CoreGroup>>(page.AsEnumerable());
+
+                return new UserGroupsRecordSet(records, allUserGroups.Count());
             }
         }
     }

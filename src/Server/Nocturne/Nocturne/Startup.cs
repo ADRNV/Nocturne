@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nocturne.Core.Mails;
@@ -126,18 +125,9 @@ namespace Nocturne
                     };
                 });
 
-            services.AddControllers();
+            services.AddCors();
 
-            services.AddCors(c =>
-            {
-                c.AddPolicy("Client", p =>
-                {
-                    p.WithOrigins("http://localhost:4200");
-                    p.AllowAnyMethod();
-                    p.AllowAnyHeader();
-                    p.AllowCredentials();
-                });
-            });
+            services.AddControllers();
 
             services.AddAutoMapper(c =>
             {
@@ -172,7 +162,7 @@ namespace Nocturne
             {
                 options.EnableDetailedErrors = true;
             });
-           
+
             services.AddSwaggerGen(c =>
             {
                 c.SupportNonNullableReferenceTypes();
@@ -227,10 +217,9 @@ namespace Nocturne
         {
             app.UseAuthentication();
 
-            app.UseStaticFiles();
-            app.UseRouting();
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-            app.UseCors("Client");
+            app.UseRouting();
 
             using (var scope =
                         app.ApplicationServices.CreateScope())
