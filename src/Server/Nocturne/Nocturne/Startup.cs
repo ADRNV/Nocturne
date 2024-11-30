@@ -125,6 +125,8 @@ namespace Nocturne
                     };
                 });
 
+            services.AddCors();
+
             services.AddControllers();
 
             services.AddAutoMapper(c =>
@@ -214,6 +216,8 @@ namespace Nocturne
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseAuthentication();
+
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseRouting();
 
