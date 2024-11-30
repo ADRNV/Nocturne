@@ -1,40 +1,31 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsersService } from '../../../shared/services/users.service';
-import {MatTableModule} from '@angular/material/table';
 import { map, merge, startWith, switchMap, take, tap } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { User } from '../../../models/user';
-import { EventEmitter } from 'stream';
+import { TableBase } from '../../../core/table-base/table-base';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
-export class UsersComponent implements AfterViewInit {
+export class UsersComponent extends TableBase<User> {
   
-  dataSource: MatTableDataSource<User> = new MatTableDataSource<User>([]);
-
-  length: number = 0;
-
-  displayedColumns = ['id', 'userName', 'login', 'isOnline'];
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   constructor(private usersService: UsersService){
-
+    super();
+    this.displayedColumns = ['id', 'userName', 'login', 'isOnline'];
   }
 
-  ngAfterViewInit(): void {
-    this.paginator.length = 100;
+  override ngAfterViewInit(): void {
     merge(this.paginator.page)
     .pipe(
       startWith({}),
       switchMap(() => {
-        
+  
         return this.usersService.getUsers(
-          this.paginator.pageIndex+1,
+          this.paginator.pageIndex,
           this.paginator.pageSize
         );
       }),
@@ -47,9 +38,4 @@ export class UsersComponent implements AfterViewInit {
       this.dataSource.data = data;
     });
   }
-
-  onPage(e: any){
-    console.log(e);
-  }
-
 }
