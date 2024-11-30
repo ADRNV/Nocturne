@@ -14,7 +14,7 @@ import { EventEmitter } from 'stream';
 })
 export class UsersComponent implements AfterViewInit {
   
-  dataSource!: MatTableDataSource<User>;
+  dataSource: MatTableDataSource<User> = new MatTableDataSource<User>([]);
 
   length: number = 0;
 
