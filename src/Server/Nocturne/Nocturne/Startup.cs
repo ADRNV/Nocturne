@@ -219,6 +219,8 @@ namespace Nocturne
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             app.UseRouting();
 
             using (var scope =
