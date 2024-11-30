@@ -11,10 +11,11 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../features/header/header.component';
 import { AppRoutingModule } from '../../app.routes';
 import { AboutComponent } from '../../features/about/about.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule, SimpleSnackBar } from '@angular/material/snack-bar'
 import { RegisterUserComponent } from '../../features/register-user/register-user.component';
 import {MatIconModule} from '@angular/material/icon';
+import { AuthInterceptor } from '../../shared/interceptors/AuthInceptor';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {MatIconModule} from '@angular/material/icon';
     AboutComponent,
     RouterOutlet,
     RouterModule
-  ]
+  ],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}]
 })
 export class SharedModule { }

@@ -1,11 +1,17 @@
-export interface Token {
-    accessToken: string
-    refreshToken: RefreshToken
+export class Token {
+    
+    constructor(
+        public accessToken: string,
+        public refreshToken: RefreshToken){
+    }
 }
   
-export interface RefreshToken {
-    id: string
-    username: string
-    tokenString: string
-    expireAt: string
+export class RefreshToken {
+    public constructor(
+    public id: string,
+    public username: string,
+    public tokenString: string,
+    public expireAt: string){
+
+    }
 }
