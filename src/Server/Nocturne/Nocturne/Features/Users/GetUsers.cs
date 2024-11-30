@@ -26,7 +26,7 @@ namespace Nocturne.Features.Users
             public async Task<UsersRecordSet> Handle(Command request, CancellationToken cancellationToken)
             {
                 var users = await Task.Run(() => _userManager.Users
-                     .Skip((request.Page - 1) * request.PageSize)
+                     .Skip((request.Page) * request.PageSize)
                      .Take(request.PageSize)
                      .AsEnumerable());
 

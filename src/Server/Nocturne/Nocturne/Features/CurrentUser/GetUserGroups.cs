@@ -38,7 +38,7 @@ namespace Nocturne.Features.CurrentUser
                     ;
 
                 var page = allUserGroups
-                    .Skip((request.Page - 1) * request.PageSize)
+                    .Skip((request.Page) * request.PageSize)
                     .Take(request.PageSize);
 
                 var records = allUserGroups is null ? Enumerable.Empty<CoreGroup>() :
