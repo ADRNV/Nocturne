@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Nocturne.Core.Managers;
 using Nocturne.Infrastructure.Caching;
@@ -140,7 +141,7 @@ namespace Nocturne.Infrastructure.Messaging
 
             return _cacheRepository.Cache
                 .Where(c => c.UserId == connectedUser.Id.ToString())
-                .IsNullOrEmpty();
+                .FirstOrDefaultAsync() is null;
         }
     }
 }
