@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Core.Models;
+using Nocturne.Infrastructure.Filtering;
 using Nocturne.Infrastructure.Security;
 using Nocturne.Models;
 
@@ -25,9 +26,9 @@ namespace Nocturne.Features.Users
         /// <param name="page">Page</param>
         /// <param name="pageSize">Count of users on page</param>
         /// <returns></returns>
-        [HttpGet("page/")]
-        public async Task<UsersRecordSet> GetUsers([FromQuery] int page, [FromQuery] int pageSize) =>
-           await _mediator.Send(new GetUsers.Command(page, pageSize));
+        [HttpPost("page/")]
+        public async Task<UsersRecordSet> GetUsers([FromQuery] int page, [FromQuery] int pageSize, [FromBody] string[] search) =>
+           await _mediator.Send(new GetUsers.Command(page, pageSize, search));
 
         [HttpGet("{userName}")]
         public async Task<CoreUser> GetUser([FromRoute] string userName) =>

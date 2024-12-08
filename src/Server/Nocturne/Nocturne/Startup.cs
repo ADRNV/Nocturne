@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Nocturne.Core.Filtering;
 using Nocturne.Core.Mails;
 using Nocturne.Core.Managers;
 using Nocturne.Core.Repositories;
 using Nocturne.Features.Messaging.Hubs;
 using Nocturne.Features.Validation;
 using Nocturne.Infrastructure.Caching;
+using Nocturne.Infrastructure.Filtering;
 using Nocturne.Infrastructure.Groups;
 using Nocturne.Infrastructure.MailSending;
 using Nocturne.Infrastructure.MailSending.Options;
@@ -149,6 +151,8 @@ namespace Nocturne
             services.AddScoped<IGroupManager, GroupsManager>();
 
             services.AddScoped<IJwtAuthManager, JwtAuthManager>();
+
+            services.AddSingleton<ITypedSearchMapper<User>, SearchArrayMapper<User>>();
 
             services.AddMediatR(cfg =>
             {
