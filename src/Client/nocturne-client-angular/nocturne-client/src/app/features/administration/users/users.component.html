@@ -1,4 +1,17 @@
-<div>
+<div class="row-cols-6">
+    <form [formGroup]="filterForm">
+        <mat-form-field >
+            <input formControlName="id" matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="userName" matInput >
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="login" matInput >
+        </mat-form-field>
+    </form>
+</div>
+<div class="row-cols-6">
     <table mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="id">

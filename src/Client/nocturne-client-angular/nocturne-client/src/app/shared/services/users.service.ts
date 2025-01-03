@@ -16,17 +16,16 @@ export class UsersService {
     this.baseUrl = environment.apiUrl;
   }
 
-  getUsers(page: number, size: number): Observable<RecordsResponse<User>>{
+  getUsers(page: number, size: number, search: string[] = []): Observable<RecordsResponse<User>>{
     
     var params = new HttpParams();
 
     params = params.append("page", page);
     params = params.append("pageSize", size);
-
-    return this.httpClient.get<RecordsResponse<User>>(this.baseUrl+"Users/page",
-      {
-        params: params
-      }
-    );
+    params = params.append("pageSize", size);
+    
+    return this.httpClient.post<RecordsResponse<User>>(this.baseUrl+"Users/page", search, {
+      params: params
+    });
   }
 }
