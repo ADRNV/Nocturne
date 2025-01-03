@@ -17,6 +17,7 @@ import { MatSnackBarModule, SimpleSnackBar } from '@angular/material/snack-bar'
 import { RegisterUserComponent } from '../../features/register-user/register-user.component';
 import {MatIconModule} from '@angular/material/icon';
 import { AuthInterceptor } from '../../shared/interceptors/AuthInceptor';
+import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -42,14 +43,24 @@ import { AuthInterceptor } from '../../shared/interceptors/AuthInceptor';
     MatFormFieldModule,
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatAccordion, 
+    MatExpansionModule
   ],
   exports:[
     AuthComponent,
     HeaderComponent,
     AboutComponent,
     RouterOutlet,
-    RouterModule
+    RouterModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatAccordion, 
+    MatExpansionModule,
+    MatButtonModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}]
 })

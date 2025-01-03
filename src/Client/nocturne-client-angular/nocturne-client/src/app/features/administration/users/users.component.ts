@@ -18,8 +18,8 @@ export class UsersComponent extends TableBase<User> {
 
   constructor(private usersService: UsersService){
     super();
-    this.displayedColumns = ['id', 'userName', 'login', 'isOnline'];
-
+    this.displayedColumns = ['id', 'userName', 'login', 'isOnline', ' '];
+    
     this.filterForm = new FormGroup(
       {
         id: new FormControl(),
@@ -43,7 +43,7 @@ export class UsersComponent extends TableBase<User> {
 
         if(id) {search.push(`Id,Equals,${id}`)}
         if(userName){search.push(`UserName,Contains,${userName}`)}
-        if(login){search.push(`UserName,Contains,${userName}`)}
+        if(login){search.push(`Email,Contains,${login}`)}
 
         return this.usersService.getUsers(
           this.paginator.pageIndex,
