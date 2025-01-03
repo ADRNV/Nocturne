@@ -47,5 +47,10 @@ namespace Nocturne.Features.Users
         [HttpPost("create")]
         public async Task<bool> CreateUser([FromBody] CoreUser user, string role) =>
             await _mediator.Send(new CreateUser.Command(user, role));
+
+        [HttpPost("bulk/upload")]
+        public async Task<bool> Upload([FromForm] IEnumerable<IFormFile> file) =>
+             await _mediator.Send(new UploadUsers.Command(file.First()));
+        
     }
 }

@@ -134,6 +134,7 @@ namespace Nocturne
             services.AddAutoMapper(c =>
             {
                 c.AddProfile<IdentityUserMappingProfile>();
+                c.AddProfile<FileUserMappingProfile>();
             }, Assembly.GetExecutingAssembly());
 
             services.AddScoped<IMailSender, MailSender>();
@@ -161,7 +162,7 @@ namespace Nocturne
             });
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
+       
             services.AddSignalR(options =>
             {
                 options.EnableDetailedErrors = true;
